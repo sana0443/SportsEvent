@@ -3,7 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import bookingReducer from "./bookingSlice";
-import {persistReducer,persistStore} from '/redux-persist/integration/react'
+import {persistReducer,persistStore} from 'redux-persist/integration/react'
 import storage from 'redux-persist/lib/storage'
 
 
