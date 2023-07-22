@@ -1,3 +1,3 @@
- const BaseUrl='http://127.0.0.1:8000/'
+ const BaseUrl='https://sports-event-yiqz.onrender.com'
 
  export default BaseUrl;

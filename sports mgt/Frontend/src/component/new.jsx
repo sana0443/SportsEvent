@@ -41,7 +41,7 @@ const HomePage = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-2">View Our history</h2>
             <p className="text-gray-600">
-            Go through our past and facilities
+              Go through our past and facilities
             </p>
             <a
               href="/teams"
@@ -53,10 +53,9 @@ const HomePage = () => {
         </div>
       </div>
 
-     
-<div className="h-screen px-4 pb-20 pt-4">
+      <div className="h-screen px-4 pb-20 pt-4">
         <section className="bg-gray-50">
-          <div className="container mx-auto">
+          <div className="container mx-auto h-screen">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {/* Render your feature cards here */}
             </div>
@@ -108,31 +107,28 @@ const HomePage = () => {
                 </Card>
               </div>
             </div>
-       
-            <div className="mx-auto md:w-4/4">
-          
-          </div>
+
+            <div className="flex justify-start pt-14 pl-28">
+              <div className="w-full md:w-4/12 pb-80">
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-xl font-semibold mb-2">Book a slot</h2>
+                  <p className="text-gray-600">Explore the facilities</p>
+                  <a
+                    href="/teams"
+                    className="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+                  >
+                    Click here
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
-</div>
+      </div>
 
-      {/* </div> */}
-    // </div>
+    </div>
   );
 };
 
 export default HomePage;
-
-
-  {/* <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-2">Book a slot</h2>
-            <p className="text-gray-600">
-            Explore the facilities
-            </p>
-            <a
-              href="/teams"
-              className="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-            >
-              Click here
-            </a>
-          </div> */}
