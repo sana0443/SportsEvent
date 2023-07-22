@@ -36,7 +36,7 @@ const TournamentList = () => {
 
   const fetchTournaments = async () => {
     try {
-      const response = await axios.get(BaseUrl+'Tournament/list/');
+      const response = await axios.get(BaseUrl+'/Tournament/list/');
       setTournaments(response.data);
     } catch (error) {
       console.error(error);

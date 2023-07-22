@@ -46,7 +46,7 @@ function Booking() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(BaseUrl+'account/userdata', {
+        const response = await axios.get(BaseUrl+'/account/userdata', {
           params: {
             user_id: user,
           },

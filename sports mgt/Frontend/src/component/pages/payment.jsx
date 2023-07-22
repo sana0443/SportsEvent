@@ -47,7 +47,7 @@ function Payment() {
       const bodyData = new FormData();
       bodyData.append('response', JSON.stringify(response));
 
-      await axios.post(BaseUrl+'slots/handle_payment_success/', bodyData, {
+      await axios.post(BaseUrl+'/slots/handle_payment_success/', bodyData, {
         headers: {
           'Content-Type': 'application/json',
         },

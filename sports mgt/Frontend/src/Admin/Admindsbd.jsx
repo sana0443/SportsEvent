@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const [revenueData, setRevenueData] = useState([]);
 
   useEffect(() => {
-    axios.get(BaseUrl+'AdminSide/bookedSlots/')
+    axios.get(BaseUrl+'/AdminSide/bookedSlots/')
       .then((response) => {
         setRevenueData(response.data);
         console.log(response.data, '----------');

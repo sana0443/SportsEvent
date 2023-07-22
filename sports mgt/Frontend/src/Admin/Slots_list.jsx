@@ -17,7 +17,7 @@ const SlotsList = () => {
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get(BaseUrl+'AdminSide/allslots/');
+      const response = await axios.get(BaseUrl+'/AdminSide/allslots/');
       setSlots(response.data);
     } catch (error) {
       console.error('Error fetching slots:', error);

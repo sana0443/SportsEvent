@@ -12,6 +12,10 @@ function Turfs() {
   const[slots,setSlots]=useState([])
   const [bookedSlots,setBookedSlots]=useState([])
   const navigate=useNavigate();
+  console.log('all turfs', turfs);
+  console.log('');
+  console.log('');
+
 
   useEffect(() => {
     fetchTurfs();
@@ -24,7 +28,7 @@ function Turfs() {
 
   const fetchTurfs = async () => {
     try {
-      const response = await axios.get(BaseUrl+'slots/turfs/');
+      const response = await axios.get(BaseUrl+'/slots/turfs/');
       setTurfs(response.data);
     } catch (error) {
       console.log(error);

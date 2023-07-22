@@ -92,7 +92,7 @@ const TournamentEditForm = () => {
 
   const fetchDisabledDates = () => {
     axios
-      .get(BaseUrl+'Tournament/dates/')
+      .get(BaseUrl+'/Tournament/dates/')
       .then((response) => {
         setDisabledDates(response.data);
       })

@@ -133,7 +133,7 @@ function RegistrationForm() {
     };
   
     try {
-      const response = await fetch(BaseUrl+'Tournament/teams/create/', {
+      const response = await fetch(BaseUrl+'/Tournament/teams/create/', {
         method: 'POST',
         body: formData,
         headers: headers,
@@ -160,7 +160,7 @@ function RegistrationForm() {
             playerFormData.append('additional_info', player.additionalInfo);
             playerFormData.append('team', teamId);
   
-            return fetch(BaseUrl+'Tournament/players/create/', {
+            return fetch(BaseUrl+'/Tournament/players/create/', {
               method: 'POST',
               body: playerFormData,
               headers: headers,

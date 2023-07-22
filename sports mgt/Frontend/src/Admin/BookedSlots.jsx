@@ -8,7 +8,7 @@ function BookedSlots() {
   const [bookedSlots, setBookedSlots] = useState([]);
 
   useEffect(() => {
-    axios.get(BaseUrl+'AdminSide/bookedSlots/')
+    axios.get(BaseUrl+'/AdminSide/bookedSlots/')
       .then((response) => {
         setBookedSlots(response.data);
         console.log(response.data,'bbbbbbb');

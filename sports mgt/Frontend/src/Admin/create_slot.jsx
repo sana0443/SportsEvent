@@ -33,7 +33,7 @@ function CreateSlotForm() {
 
   const fetchAvailableTurfs = () => {
     axios
-      .get(BaseUrl+'slots/turfs/')
+      .get(BaseUrl+'/slots/turfs/')
       .then((response) => {
         setAvailableTurfs(response.data);
       })
@@ -79,7 +79,7 @@ function CreateSlotForm() {
   
     // Send the data to the backend API
     axios
-      .post(BaseUrl+'AdminSide/createSlot/', {
+      .post(BaseUrl+'/AdminSide/createSlot/', {
         turf: turf.id,
         start_time: formattedStartTime,
         end_time: formattedEndTime,

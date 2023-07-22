@@ -58,7 +58,7 @@ const Login = () => {
     };
 
     try {
-      const { data } = await axios.post(BaseUrl+'account/signin/', user);
+      const { data } = await axios.post(BaseUrl+'/account/signin/', user);
       console.log('axios return data--------------------',data);
       Cookies.set('access-token', data.access_token);
       Cookies.set('refresh-token', data.refresh_token);

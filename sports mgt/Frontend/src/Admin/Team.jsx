@@ -17,7 +17,7 @@ function Team() {
 
   const fetchTeams = async () => {
     try {
-      const response = await fetch(BaseUrl+'Tournament/team/');
+      const response = await fetch(BaseUrl+'/Tournament/team/');
       if (response.ok) {
         const teamsData = await response.json();
         setTeams(teamsData);

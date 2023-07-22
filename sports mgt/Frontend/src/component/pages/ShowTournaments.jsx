@@ -22,7 +22,7 @@ function ShowTournaments() {
 
   const fetchTournaments = async () => {
     try {
-      const response = await fetch(BaseUrl+'Tournament/list/');
+      const response = await fetch(BaseUrl+'/Tournament/list/');
 
       if (response.ok) {
         const data = await response.json();

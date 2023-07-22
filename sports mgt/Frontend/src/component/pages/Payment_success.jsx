@@ -45,7 +45,7 @@ function PaymentSuccess() {
           slot: slotData,
         };
     
-        const response = await axios.post(BaseUrl+'slots/booking/', bookingData);
+        const response = await axios.post(BaseUrl+'/slots/booking/', bookingData);
     
         console.log('Booking details stored successfully:', response.data);
       } catch (error) {

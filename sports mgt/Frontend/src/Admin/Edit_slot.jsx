@@ -37,7 +37,7 @@ function Edit_slot() {
   }, [availableTurfs]);
   const fetchAvailableTurfs = () => {
     axios
-      .get(BaseUrl+'slots/turfs/')
+      .get(BaseUrl+'/slots/turfs/')
       .then((response) => {
         setAvailableTurfs(response.data);
       })

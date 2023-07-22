@@ -36,7 +36,7 @@ const UserList = () => {
   }, [searchTerm]);
 
   const fetchUserList = () => {
-    fetch(BaseUrl+'AdminSide/userlist')
+    fetch(BaseUrl+'/AdminSide/userlist')
       .then((response) => response.json())
       .then((data) => {
         setUsers(data);

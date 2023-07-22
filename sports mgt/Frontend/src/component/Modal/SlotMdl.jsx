@@ -29,7 +29,7 @@ function SlotMdl({ isVisible, onClose, slot,user }) {
     e.preventDefault();
 
     try {
-      const response = await axios.put(BaseUrl+'account/userdata', {
+      const response = await axios.put(BaseUrl+'/account/userdata', {
         user_id: user?.id,
         full_name: fullname,
         email: email,

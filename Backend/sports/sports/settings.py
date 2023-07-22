@@ -143,14 +143,27 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL='account.signup'
-CORS_ALLOWED_ORIGINS = [
-    'https://sports-event.vercel.app/',  # Add your frontend origin here
 
 
 
+# CORS_ALLOWED_ORIGINS = [
+#     'https://sports-event.vercel.app/',  # Add your frontend origin here
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 

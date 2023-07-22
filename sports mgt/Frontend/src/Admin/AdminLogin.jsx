@@ -47,7 +47,7 @@ const AdminLogin = () => {
     };
 
     try {
-      const { data } = await axios.post(BaseUrl+'account/AdminLogin/', user);
+      const { data } = await axios.post(BaseUrl+'/account/AdminLogin/', user);
      
       console.log('axios return data', data);
       Cookies.set("access-token", data.access_token)

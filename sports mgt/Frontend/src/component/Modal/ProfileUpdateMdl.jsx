@@ -17,7 +17,7 @@ function ProfileUpdateMdl({ isVisible, onClose, profilee, onProfileUpdate }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(BaseUrl+'account/userdata', {
+        const response = await axios.get(BaseUrl+'/account/userdata', {
           params: {
             user_id: user,
           },
@@ -53,7 +53,7 @@ function ProfileUpdateMdl({ isVisible, onClose, profilee, onProfileUpdate }) {
         formData.append('photo', newPhoto);
       }
 
-      const response = await axios.put(BaseUrl+'account/userdata', formData, {
+      const response = await axios.put(BaseUrl+'/account/userdata', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
