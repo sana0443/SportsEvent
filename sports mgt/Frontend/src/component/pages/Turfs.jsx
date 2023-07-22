@@ -55,7 +55,7 @@ function Turfs() {
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/slots/slots/${selectedTurfId}/`);
+      const response = await axios.get(`${BaseUrl}slots/slots/${selectedTurfId}/`);
       // Handle the fetched slots data as needed
       console.log(response.data,'itttttttttttt');
       setSlots(response.data)
@@ -84,7 +84,7 @@ function Turfs() {
     {turfs.map((turf) => (
       <div key={turf.id} className="bg-white p-4 shadow rounded-lg">
         {turf.photo && (
-          <img src={`http://127.0.0.1:8000/${turf.photo}`} alt="Turf Thumbnail" className="mb-4 w-full h-64 object-cover rounded-md" />
+          <img src={`${BaseUrl}${turf.photo}`} alt="Turf Thumbnail" className="mb-4 w-full h-64 object-cover rounded-md" />
         )}
         <h3 className="text-xl font-bold mb-2">{turf.name}</h3>
         <p className="text-gray-500 mb-2">{turf.location}</p>

@@ -65,7 +65,7 @@ function Team() {
                         </td>
                         <td className="border px-4 py-2">
                           <a href="#" onClick={() => viewDetails(team.id)}>
-                            <img src={`http://127.0.0.1:8000/${team.logo}`} alt={team.team_name} className="h-10 w-10" />
+                            <img src={`${BaseUrl}${team.logo}`} alt={team.team_name} className="h-10 w-10" />
                           </a>
                         </td>
                       </tr>

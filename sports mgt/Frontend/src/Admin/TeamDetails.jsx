@@ -43,7 +43,7 @@ console.log(team_id);
         <h2 className="text-2xl font-bold mb-4">{team.team_name}</h2>
         <p className="text-lg font-semibold">Captain: {captain.name}</p>
         <div className="my-4">
-          <img src={`http://127.0.0.1:8000/${team.logo}`} alt={team.team_name} className="w-40 h-40 object-cover rounded-full" />
+          <img src={`${BaseUrl}${team.logo}`} alt={team.team_name} className="w-40 h-40 object-cover rounded-full" />
         </div>
         <h3 className="text-xl font-bold mb-2">Players:</h3>
         <ul className="list-disc pl-6">

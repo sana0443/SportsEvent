@@ -33,7 +33,7 @@ const turf_id=quaryParams.get('id');
   }
 
 
-  const backgroundImage = `url(http://127.0.0.1:8000/${turf.photo})`;
+  const backgroundImage = `url(${BaseUrl}${turf.photo})`;
 
 
   return (
