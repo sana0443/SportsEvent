@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  build: {
-    rollupOptions: {
-      external: ['redux-persist/integration/react'],
-    },
-  },
+  // build: {
+  //   rollupOptions: {
+  //     external: ['redux-persist/integration/react'],
+  //   },
+  // },
 });
