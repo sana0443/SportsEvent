@@ -34,7 +34,7 @@ export function Profile() {
           // if (response.data.tournament_id) {
           //   // Fetch tournament data using the tournament_id
           //   const tournamentResponse = await axios.get(
-          //     `http://127.0.0.1:8000/tournaments/${response.data.tournament_id}`
+          //     `${BaseUrl}tournaments/${response.data.tournament_id}`
           //   );
           //   // setTournamentData(tournamentResponse.data);
           // } else {
@@ -135,7 +135,7 @@ export function Profile() {
                   <div className="relative">
                     <div className="-mt-20 w-40">
                     <Avatar
-                      src={userData.photo ? `http://127.0.0.1:8000/${userData.photo}` :image.url }
+                      src={userData.photo ? `${BaseUrl}${userData.photo}` :image.url }
                     alt="Profile picture"
                     variant="circular"
                     className="h-40 w-40 mt-4 mx-auto object-cover rounded-full"
@@ -204,7 +204,7 @@ export function Profile() {
     <h2 className="text-2xl font-bold mb-4">Team Details</h2>
     <p className="text-lg font-semibold">Team Name: {teamData[0].team_name}</p>
     <img
-      src={teamData[0].logo ? `http://127.0.0.1:8000/${teamData[0].logo}` : 'placeholder_image_url'}
+      src={teamData[0].logo ? `${BaseUrl}${teamData[0].logo}` : 'placeholder_image_url'}
       alt="Team Logo"
       className="h-20 w-20 mt-4 mx-auto object-cover rounded-full"
     />
