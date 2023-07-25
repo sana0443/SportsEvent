@@ -28,8 +28,11 @@ function TournamentMdl({ isVisible, onClose, tournament ,tournamentId}) {
             x
           </button>
           <div className="bg-white p-1 rounded-lg overflow-y-auto">
-            <h1>{tournament.title}</h1>
-            <p>{tournament.description}</p>
+          <h1 className="text-3xl font-bold mb-2">{tournament.title}</h1>
+              <p className="text-gray-600 mb-4">{tournament.description}</p>
+              <p className="text-gray-600 mb-2">Registration Deadline: {tournament.registration_deadline}</p>
+
+
              <Link
               to={{
                 pathname: `/registration/${tournamentId}`,

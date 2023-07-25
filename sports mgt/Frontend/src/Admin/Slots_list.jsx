@@ -1,31 +1,40 @@
-// src/components/SlotsList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List } from 'antd';
+import { List, Pagination, Input } from 'antd'; // Import Pagination and Input components
 import Sidebar from './Sidebar';
 import moment from 'moment';
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 import BaseUrl from '../BaseUrl';
+
 const SlotsList = () => {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   const [slots, setSlots] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchSlots();
-  }, []);
+  }, [currentPage]); // Fetch slots whenever the currentPage changes
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get(BaseUrl+'/AdminSide/allslots/');
-      setSlots(response.data);
+      const response = await axios.get(BaseUrl + '/AdminSide/allslots/', {
+        params: {
+          page: currentPage, // Send the current page number as a query parameter
+          search: searchTerm // Send the search term as a query parameter
+        }
+      });
+      // Ensure the API response is an array of objects
+      console.log(response.data,"ttttttttttttttttttttttttt");
+      setSlots(response.data); // Assuming the API response contains a property called "slots"
     } catch (error) {
       console.error('Error fetching slots:', error);
     }
   };
+
   const handleEditSlot = (slotId) => {
     navigate (`/editslot/${slotId}`);
-    
     console.log(`Edit slot with ID ${slotId}`);
   };
 
@@ -40,6 +49,16 @@ const SlotsList = () => {
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  
+
   return (
     <div>
      <section className="relative block h-[50vh]">
@@ -53,43 +72,45 @@ const SlotsList = () => {
             {/* change */}
             <div className="flex-grow bg-gray-100 p-8">
         <h2 className="text-2xl text-center font-bold mb-8">All Slots</h2>
+        
         <div className="rounded-lg overflow-hidden">
-          <List
-            dataSource={slots}
-            renderItem={(slot) => (
-              <List.Item className="border-b border-gray-200 p-4 flex flex-row justify-between items-center">
-                <div>
-                  <p className="text-lg font-semibold">
-                    {slot.start_time
-                      ? moment(slot.start_time).format('YYYY-MM-DD')
-                      : '-'}{' '}
-                    - {slot.start_time
-                      ? moment(slot.start_time, 'HH:mm').format('HH:mm')
-                      : '-'}{' '}
-                    - {slot.end_time
-                      ? moment(slot.end_time, 'HH:mm').format('HH:mm')
-                      : '-'}{' '}
-                  </p>
-                  <p className="text-sm text-gray-500">Turf: {slot.turf}</p>
-                </div>
-                <div className="flex items-center">
-                  <button
-                    onClick={() => handleEditSlot(slot.id)}
-                    className="px-3 py-1 mr-2 text-white bg-yellow-500 rounded-lg"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteSlot(slot.id)}
-                    className="px-3 py-1 text-white bg-red-500 rounded-lg"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </List.Item>
-            )}
-          />
+  <List
+    dataSource={slots}
+    renderItem={(slotItem) => ( // Renamed slots to slotItem here
+      <List.Item className="border-b border-gray-200 p-4 flex flex-row justify-between items-center">
+        <div>
+          <p className="text-lg font-semibold">
+            {slotItem.start_time
+              ? moment(slotItem.start_time).format('YYYY-MM-DD')
+              : '-'}{' '}
+            - {slotItem.start_time
+              ? moment(slotItem.start_time).format('HH:mm')
+              : '-'}{' '}
+            - {slotItem.end_time
+              ? moment(slotItem.end_time).format('HH:mm')
+              : '-'}{' '}
+          </p>
+          <p className="text-sm text-gray-500">Turf: {slotItem.turf.name}</p>
         </div>
+        <div className="flex items-center">
+          <button
+            onClick={() => handleEditSlot(slotItem.id)}
+            className="px-3 py-1 mr-2 text-white bg-yellow-500 rounded-lg"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDeleteSlot(slotItem.id)}
+            className="px-3 py-1 text-white bg-red-500 rounded-lg"
+          >
+            Delete
+          </button>
+        </div>
+      </List.Item>
+    )}
+  />
+</div>
+
       </div>
             {/* change */}
           </div>

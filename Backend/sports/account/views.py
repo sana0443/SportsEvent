@@ -71,9 +71,10 @@ class UserSignup(APIView):
                 #     return Response({"success": False, "errors": {"otp": "Invalid OTP."}}, status=status.HTTP_400_BAD_REQUEST)
 
                 else:
-                    print(" post elese")
-                    serializer.save()
-                    return Response({"success": True, "message": "not exsisting"}, status=status.HTTP_201_CREATED)
+                    print(" post elese-----------------------------------------------------------------------------777777777777777777777777777-----------------------")
+                    user =serializer.save()
+                    print(user.id,'this is usr id from signup -----------------------------------------------------')
+                    return Response({"success": True, "user_id": user.id}, status=status.HTTP_201_CREATED)
             else:
                 errors = {}
                 for field, field_errors in serializer.errors.items():
@@ -109,12 +110,15 @@ class UserLogin(APIView):
         except signup.DoesNotExist:
             print("not user")
             raise AuthenticationFailed("Account does not exist")
-
+        print(password,'-----------enterd pass -------------------')
+        print(user.password,'-----------db pass -------------------')
+        print(check_password(password,user.password),'hased pas -----------------------------------')
         if not check_password(password, user.password):
             print("incorrect password ")
             raise AuthenticationFailed("Incorrect Password")
         
-        if user.is_blocked:
+
+        if user.is_active is False:
             print("User is blocked")
             raise AuthenticationFailed("You are blocked")
 

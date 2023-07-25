@@ -9,11 +9,12 @@ from rest_framework import generics, status
 from django.core.cache import cache
 from Tournament.models import Tournament_ancmt
 from Tournament.serializers import TournamentSerializer
-from Slots.serializers import SlotSerializer,BookingSerializer
+from Slots.serializers import SlotSerializer,BookingSerializer,SlotssSerializer
 from Slots.models import Booking,Slot
 import logging
-
-
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
 
 
 
@@ -29,33 +30,26 @@ class UserListView(APIView):
             user['userId'] = user_ids[i]
         return Response(user_data)
     
-
-class UserBlockView(APIView):
-    queryset = signup.objects.all()
-    serializer_class = Signupserializer
-
-    def put(self, request, pk, *args, **kwargs):
-        instance = signup.objects.get(pk=pk)
-        instance.is_blocked = True
-        instance.save()
-        serializer = self.serializer_class(instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+@csrf_exempt
+@api_view(['POST'])
+def user_block(request):
 
 
+    try :
+        email = request.data.get('email')
+        user = get_object_or_404(signup, email=email)
 
-class UserUnblockView(APIView):
-    queryset = signup.objects.all()
-    serializer_class = Signupserializer
+        if user.is_active:
+            user.is_active = False
+            message = 'User blocked successfully'
+        else:
+            user.is_active = True
+            message = 'User unblocked successfully'
 
-    def put(self, request,pk, *args, **kwargs):
-        instance = signup.objects.get(pk=pk)
-        instance.is_blocked = False
-        instance.save()
-        serializer = self.serializer_class(instance)
-        cache_key = f"user_{pk}"
-        cache.delete(cache_key)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        user.save()
+        return Response({'message': message})
+    except :
+        return Response({'error' : 'error happend'})
     
 
 class TournamentDeleteView(APIView):
@@ -72,7 +66,16 @@ class TournamentDeleteView(APIView):
 
 
 class CreateSlotAPIView(APIView):
-    def post(self, request, format=None):
+    # def post(self, request, format=None):
+    #     serializer = SlotSerializer(data=request.data)
+    #     print( serializer.data,"here or nottttttt")
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+     def post(self, request, format=None):
+        print(request.data,"what issue")
         serializer = SlotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -124,7 +127,8 @@ class SlotDetailView(APIView):
 
 class AllSlotListView(generics.ListAPIView):
     queryset = Slot.objects.all()
-    serializer_class = SlotSerializer
+    print(queryset,"reah--------------------------")
+    serializer_class = SlotssSerializer
 
 class SlotDeleteView(APIView):
     def delete(self, request, pk, *args, **kwargs):

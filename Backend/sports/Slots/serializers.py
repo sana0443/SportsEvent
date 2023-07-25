@@ -6,10 +6,10 @@ from .models import Slot,Turf,Booking
 class TurfSerializer(serializers.ModelSerializer):
     class Meta:
         model = Turf
-        fields = ('id', 'name', 'location', 'contact_number', 'photo')
+        fields = ('id', 'name', 'location', 'contact_number', 'photo','description')
 
 class SlotSerializer(serializers.ModelSerializer):
-    turf = TurfSerializer()  # Include TurfSerializer to handle the turf field
+    # turf = TurfSerializer()  # Include TurfSerializer to handle the turf field
 
     class Meta:
         model = Slot
@@ -30,3 +30,10 @@ class BookingSerializer(serializers.ModelSerializer):
 
         booking = Booking.objects.create(slot=slot, **validated_data)
         return booking
+    
+class SlotssSerializer(serializers.ModelSerializer):
+    turf = TurfSerializer()  # Include TurfSerializer to handle the turf field
+
+    class Meta:
+        model = Slot
+        fields = ['id', 'turf', 'start_time', 'end_time', 'price', 'is_available']

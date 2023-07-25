@@ -35,6 +35,7 @@ function CreateSlotForm() {
     axios
       .get(BaseUrl+'/slots/turfs/')
       .then((response) => {
+        console.log(response.data,"cpomiiiii");
         setAvailableTurfs(response.data);
       })
       .catch((error) => {
@@ -55,6 +56,8 @@ function CreateSlotForm() {
       turf: turfId,
       date: formattedDate,
     });
+
+
   
     axios
       .get(BaseUrl+`/AdminSide/existingSlots/?${params}`)
@@ -69,7 +72,9 @@ function CreateSlotForm() {
   
   
   
-
+const disabledDate = (current) => {
+    return current && current < moment().startOf('day');
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
   
@@ -233,6 +238,7 @@ const slotExists = (startTime, endTime) => {
       id="selectedDate"
       value={selectedDate}
       onChange={(date) => setSelectedDate(date)}
+      disabledDate={ disabledDate }
       className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
     />
   </div>
@@ -285,8 +291,8 @@ if (selectedDate) {
 const selectedEndTime = moment(selectedDate).set('hour', time.hour).set('minute', time.minute);
 const matchingSlot = disabledTimes.find(
   (slot) =>
-    selectedEndTime.isSame(slot.startTime) ||
-    (selectedEndTime.isAfter(slot.startTime) && selectedEndTime.isBefore(slot.endTime))
+    selectedEndTime.isSame(slot.endTime) ||
+    (selectedEndTime.isAfter(slot.endTime) && selectedEndTime.isBefore(slot.endTime))
 );
 if (matchingSlot) {
   return {

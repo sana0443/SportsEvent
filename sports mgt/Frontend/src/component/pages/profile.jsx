@@ -20,6 +20,7 @@ export function Profile() {
   const navigate = useNavigate();
 
   const user_id = localStorage.getItem("token");
+  console.log(user_id,'------');
 
   useEffect(() => {
     if (user_id) {
@@ -234,7 +235,7 @@ export function Profile() {
 {playerData.length > 0 && (
     <div>
       <h2 className="text-2xl font-bold mb-4">Player Details</h2>
-      <div className="grid grid-cols-7 gap-4 justify-center">
+      <div className="grid  md:grid-cols-4 gap-4 justify-center">
         {/* Render players in each line */}
         {playerData.map((player) => (
           <div key={player.id} className="p-4 border rounded-lg shadow-lg">
@@ -253,7 +254,7 @@ export function Profile() {
           <div>
             
             <h2 className="text-2xl font-bold mb-4">Booked Slots</h2>
-            <div className="grid grid-cols-4 gap-4 justify-center">
+            <div className="grid md:grid-cols-3 gap-4 justify-center">
               {bookedSlots.map((slot) => {
                 // Convert the start_time to a Date object
                 const bookingDate = new Date(slot.start_time);

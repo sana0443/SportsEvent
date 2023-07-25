@@ -14,6 +14,7 @@ const turf_id=quaryParams.get('id');
       try {
         const response = await axios.get(BaseUrl+`/slots/turf_details/${turf_id}/`);
         setTurf(response.data);
+        console.log(response.data,'========');
         setLoading(false);
       } catch (error) {
         console.error('Error fetching turf:', error);
@@ -53,7 +54,7 @@ const turf_id=quaryParams.get('id');
             <div className="mt-4">
               <h1 className="text-lg font-bold">{turf.name}</h1>
               <p className="text-gray-600">Location: {turf.location}</p>
-              <p className="text-gray-600">Description: {turf. description}</p>
+              <p className="text-gray-600">Description: {turf.description}</p>
               <p className="text-gray-600">Contact Number: {turf.contact_number}</p>
             </div>
             </div>

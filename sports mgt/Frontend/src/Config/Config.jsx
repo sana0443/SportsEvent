@@ -4,13 +4,13 @@ import { getAuth} from "firebase/auth"
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWIQDYavOlRiR04ggP23-VhDjgE3J8LwE",
-  authDomain: "otp6-8dec1.firebaseapp.com",
-  projectId: "otp6-8dec1",
-  storageBucket: "otp6-8dec1.appspot.com",
-  messagingSenderId: "647426170759",
-  appId: "1:647426170759:web:f4aa91dc8db7c2c95b7d22",
-  measurementId: "G-M78SDEH199"
+  apiKey: "AIzaSyAY4HUka1vQgWb6FT-MfJsHLt1syNJ_fcM",
+  authDomain: "tp7-890a3.firebaseapp.com",
+  projectId: "tp7-890a3",
+  storageBucket: "tp7-890a3.appspot.com",
+  messagingSenderId: "190521381940",
+  appId: "1:190521381940:web:57007e52fd5aee9d67e661",
+  measurementId: "G-NB880ETRE7"
 };
 
 

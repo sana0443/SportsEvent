@@ -37,8 +37,18 @@ console.log(team_id);
   const captain = team.players[0];
 
   return (
-    <div className="flex">
-      <Sidebar />
+    <div >
+       <section className="relative block h-[50vh]">
+        <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://media.istockphoto.com/id/1217377601/photo/concrete-floor-and-smoke-background.webp?b=1&s=170667a&w=0&k=20&c=ajtSlLyL-T2cFmBQWzbfvw-E25hfFCLt-aFnRlKOWvY=')] bg-cover bg-center" />
+          <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
+      </section>
+      <section className="relative bg-blue-gray-50/50 py-16 px-4">
+        <div className="container mx-auto">
+          <div className="relative mb-6 -mt-64 flex w-full min-w-0 break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
+            <Sidebar />
+            {/* change */}
+            
+
       <div className="max-w-2xl mx-auto p-8 shadow-lg rounded-lg bg-white">
         <h2 className="text-2xl font-bold mb-4">{team.team_name}</h2>
         <p className="text-lg font-semibold">Captain: {captain.name}</p>
@@ -56,9 +66,20 @@ console.log(team_id);
             </li>
           ))}
         </ul>
-      </div>
+      </div> 
+            
+            {/* change */}
+          </div>
+        </div>
+    </section>
+      
     </div>
   );
 }
 
 export default TeamDetails;
+
+
+
+
+

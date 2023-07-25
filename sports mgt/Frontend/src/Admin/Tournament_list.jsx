@@ -32,11 +32,13 @@ const TournamentList = () => {
   useEffect(() => {
     // Fetch tournaments data from the API
     fetchTournaments();
+    
   }, []);
 
   const fetchTournaments = async () => {
     try {
       const response = await axios.get(BaseUrl+'/Tournament/list/');
+      console.log(response.data,'daaaaaaaatas here');
       setTournaments(response.data);
     } catch (error) {
       console.error(error);
@@ -64,11 +66,16 @@ const TournamentList = () => {
   };
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+    const value = event.target.value;
+    console.log('Search Term:', value);
+    setSearchTerm(value);
   };
+  
 
   useEffect(() => {
+    console.log('Search Term:', searchTerm);
     filterTournaments();
+    console.log(filteredTournaments),'gggggggggggg';
   }, [searchTerm, tournaments]);
 
   const filterTournaments = () => {
@@ -77,8 +84,10 @@ const TournamentList = () => {
         tournament.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         tournament.event_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log('Filtered Tournaments:', filtered);
     setFilteredTournaments(filtered);
   };
+  
 
   // Pagination Logic
   const indexOfLastTournament = currentPage * perPage;
@@ -110,41 +119,42 @@ const TournamentList = () => {
               </div>
               <h1 className="text-2xl font-semibold mb-4">Tournament List</h1>
             
-              {currentTournaments.length === 0 ? (
+              {/* {currentTournaments.length === 0 ? (
                 <p>No tournaments available.</p>
-              ) : (
+              ) : ( */}
                 <>
                   <table className="min-w-full bg-white">
-                    <thead>
-                      <tr>
-                        <th className="py-2 px-4 border-b font-semibold text-left">Title</th>
-                        <th className="py-2 px-4 border-b font-semibold text-left">Event Name</th>
-                        <th className="py-2 px-4 border-b font-semibold text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentTournaments.map((tournament) => (
-                        <tr key={tournament.id}>
-                          <td className="py-2 px-4 border-b">{tournament.title}</td>
-                          <td className="py-2 px-4 border-b">{tournament.event_name}</td>
-                          <td className="py-2 px-4 border-b text-right">
-                            <button
-                              className="text-blue-500 hover:text-blue-700 mr-2"
-                              onClick={() => handleEdit(tournament.id)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="text-red-500 hover:text-red-700"
-                              onClick={() => handleDelete(tournament.id)}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+  <thead>
+    <tr>
+      <th className="py-2 px-4 border-b font-semibold text-left">Title</th>
+      <th className="py-2 px-4 border-b font-semibold text-left">Event Name</th>
+      <th className="py-2 px-4 border-b font-semibold text-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {currentTournaments.map((tournament) => (
+      <tr key={tournament.id}>
+        <td className="py-2 px-4 border-b">{tournament.title}</td>
+        <td className="py-2 px-4 border-b">{tournament.event_name}</td>
+        <td className="py-2 px-4 border-b text-right">
+          <button
+            className="text-blue-500 hover:text-blue-700 mr-2"
+            onClick={() => handleEdit(tournament.id)}
+          >
+            Edit
+          </button>
+          <button
+            className="text-red-500 hover:text-red-700"
+            onClick={() => handleDelete(tournament.id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
                   <ul className="flex mt-4">
                     {pageNumbers.map((number) => (
                       <li
@@ -159,7 +169,7 @@ const TournamentList = () => {
                     ))}
                   </ul>
                 </>
-              )}
+              
             </div>
           </div>
         </div>

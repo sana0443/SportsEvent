@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookSlot } from '../../Redux/bookingSlice';
 import BaseUrl from '../../BaseUrl';
+import moment from 'moment';
 
 
 
@@ -115,12 +116,15 @@ function Payment() {
       console.log(error);
     }
   };
+  const formattedDate = moment(date).format('YYYY-MM-DD');
  
-
+  const backgroundImage = 'url("https://cdn.wallpapersafari.com/67/99/Gm2KlY.jpg")';
+ 
 
   return (
     
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100"
+       style={{ backgroundImage: backgroundImage, backgroundSize: 'cover' }}>
     <div className="bg-white rounded-lg p-6 shadow-md">
       <h1 className="text-2xl font-bold mb-4">Summary</h1>
       <div className="mb-4">
@@ -129,7 +133,7 @@ function Payment() {
       </div>
       <div className="mb-4">
         <span className="font-bold">Date:Time: </span>
-        <span>{date}</span>
+        <span>{formattedDate}</span>
       </div>
       <div className="mb-4">
         <span className="font-bold">Price: </span>

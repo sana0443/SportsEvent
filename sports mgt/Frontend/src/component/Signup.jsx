@@ -148,9 +148,10 @@ const SignUpForm = () => {
           age: age
         };
 
-        await axios.post(BaseUrl + "/account/register/", userData);
+       const response = await axios.post(BaseUrl + "/account/register/", userData);
         dispatch(setUserDetails(userData));
-        localStorage.setItem("token", userData.id)
+        console.log(response.data.user_id,'this is from django after signup-----');
+        localStorage.setItem("token", response.data.user_id)
         navigate("/");
       } else {
         setError("Invalid OTP");

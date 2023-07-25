@@ -58,10 +58,7 @@ class signup(AbstractUser):
 
 
 
-        def save(self, *args, **kwargs):
-            self.password = make_password(self.password)
-            self.password2 = make_password(self.password2)
-            super().save(*args, **kwargs)
+        
 
     
    

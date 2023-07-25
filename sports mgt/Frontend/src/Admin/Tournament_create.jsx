@@ -27,7 +27,7 @@ const TournamentCreationForm = () => {
 
   const fetchDisabledDates = () => {
     axios
-      .get(BaseUrl+'/Tournament/dates/')
+      .get(BaseUrl+'Tournament/dates/')
       .then((response) => {
         setDisabledDates(response.data);
       })
@@ -99,7 +99,7 @@ const TournamentCreationForm = () => {
     e.preventDefault();
     console.log(eventData);
     axios
-      .post(BaseUrl+'/Tournament/create/', eventData)
+      .post(BaseUrl+'Tournament/create/', eventData)
       .then((response) => {
         console.log(response.data);
         viewDetails(response.data);

@@ -3,8 +3,8 @@ import Sidebar from './Sidebar';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { toast, Toaster } from 'react-hot-toast';
 import BaseUrl from '../BaseUrl';
+import axios from 'axios';
 const { localStorage } = window;
-
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -55,61 +55,21 @@ const UserList = () => {
   };
 
   const handleSearch = (event) => {
-    
     setSearchTerm(event.target.value);
   };
 
-  const blockUser = (userId) => {
-    console.log('Block user ID:', userId);
-
-    if (!userId) {
+  const unblockUser = (email) => {
+    if (!email) {
       console.error('Invalid userId');
       return;
     }
 
-    fetch(BaseUrl+`/AdminSide/blockUser/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ is_blocked: true }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error blocking user');
-        }
+    axios
+      .post(BaseUrl+"/AdminSide/userBlock/", {
+        email: email
       })
-      .then((data) => {
-        console.log('User blocked:', data);
-        toast.success('Successfully blocked');
-        fetchUserList();
-      })
-      .catch((error) => {
-        console.error('Error blocking user:', error);
-      });
-  };
-
-  const unblockUser = (userId) => {
-    if (!userId) {
-      console.error('Invalid userId');
-      return;
-    }
-
-    fetch(BaseUrl+`/AdminSide/unblockUser/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ is_blocked: false }),
-    })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error unblocking user');
-        }
+        console.log(response.data,'-------------------');
       })
       .then((data) => {
         console.log('User unblocked:', data);
@@ -122,10 +82,9 @@ const UserList = () => {
   };
 
   const renderUsers = () => {
-   const startIndex = (currentPage - 1) * perPage;
-const endIndex = startIndex + perPage;
-const currentUsers = filteredUsers.slice(startIndex, endIndex);
-
+    const startIndex = (currentPage - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
     return currentUsers.map((user, index) => (
       <tr
@@ -138,15 +97,15 @@ const currentUsers = filteredUsers.slice(startIndex, endIndex);
         <td className="px-6 py-4">{user.phone_number}</td>
         <td className="px-6 py-4">{user.email}</td>
         <td className="px-6 py-4">
-          {user.is_blocked ? (
-            <FaLock
-              className="text-red-500 cursor-pointer"
-              onClick={() => unblockUser(user.id)}
-            />
-          ) : (
+          {user.is_active ? (
             <FaUnlock
               className="text-green-500 cursor-pointer"
-              onClick={() => blockUser(user.id)}
+              onClick={() => unblockUser(user.email)}
+            />
+          ) : (
+            <FaLock
+              className="text-red-500 cursor-pointer"
+              onClick={() => unblockUser(user.email)}
             />
           )}
         </td>
@@ -160,98 +119,88 @@ const currentUsers = filteredUsers.slice(startIndex, endIndex);
   return (
     <div>
       <section className="relative block h-[50vh]">
-        <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://media.istockphoto.com/id/1217377601/photo/concrete-floor-and-smoke-background.webp?b=1&s=170667a&w=0&k=20&c=ajtSlLyL-T2cFmBQWzbfvw-E25hfFCLt-aFnRlKOWvY=')] bg-cover bg-center" />
-          <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
+        {/* Background styling */}
       </section>
       <section className="relative bg-blue-gray-50/50 py-16 px-4">
         <div className="container mx-auto">
           <div className="relative mb-6 -mt-64 flex w-full min-w-0 break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
             <Sidebar />
-            {/* change */}
             <div className="w-full">
-        <div className=" flex flex-col justify-evenly relative overflow-x-auto shadow-md sm:rounded-lg h-full">
-          <div className="flex items-center justify-between px-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Search:</label>
-              <input
-                type="text"
-                className="mt-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Per Page:</label>
-              <select
-                className="mt-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={perPage}
-                onChange={(e) => setPerPage(parseInt(e.target.value))}
-              >
-                <option value={2}>2</option>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-              </select>
+              <div className="flex flex-col justify-evenly relative overflow-x-auto shadow-md sm:rounded-lg h-full">
+                <div className="flex items-center justify-between px-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Search:</label>
+                    <input
+                      type="text"
+                      className="mt-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Per Page:</label>
+                    <select
+                      className="mt-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      value={perPage}
+                      onChange={(e) => setPerPage(parseInt(e.target.value))}
+                    >
+                      <option value={2}>2</option>
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                    </select>
+                  </div>
+                </div>
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-white dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Serial No.
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Full Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Age
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Phone Number
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Email
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderUsers()}</tbody>
+                </table>
+                <div className="flex justify-center mt-4">
+                  <nav>
+                    <ul className="pagination flex">
+                      {pageNumbers.map((pageNumber) => (
+                        <li
+                          key={pageNumber}
+                          className={`page-item${currentPage === pageNumber ? ' active' : ''}`}
+                        >
+                          <button
+                            className="flex items-center px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            onClick={() => handlePageChange(pageNumber)}
+                          >
+                            {pageNumber}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-white dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Serial No.
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Full Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Age
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Phone Number
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Email
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>{renderUsers()}</tbody>
-          </table>
-          <div className="flex justify-center mt-4">
-  <nav>
-    <ul className="pagination flex">
-      {pageNumbers.map((pageNumber) => (
-        <li
-          key={pageNumber}
-          className={`page-item${currentPage === pageNumber ? ' active' : ''}`}
-        >
-          <button
-            className="flex items-center px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            onClick={() => handlePageChange(pageNumber)}
-          >
-            {pageNumber}
-          </button>
-        </li>
-      ))}
-    </ul>
-  </nav>
-</div>
         </div>
-      </div>
-            
-            {/* change */}
-          </div>
-        </div>
-    </section>
+      </section>
     </div>
   );
 };
 
 export default UserList;
-
-
-
-
-
-
