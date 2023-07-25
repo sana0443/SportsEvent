@@ -32,7 +32,7 @@ import CreateSlotForm from './Admin/create_slot';
 import BookedSlots from './Admin/BookedSlots';
 import Slots_list from './Admin/Slots_list';
 import Edit_slot from './Admin/Edit_slot';
-import UserProtectedRoute from './Context/userProtectedRoute';
+// import UserProtectedRoute from './Context/userProtectedRoute';
 
 // import Slots from './component/pages/Slots';
 // import SlotCard from './component/SlotsCard';
@@ -60,7 +60,7 @@ function App() {
 
             <Route path='/ShowTournaments' element={<ShowTournaments />}/>
 
-            <Route path='/ShowTournaments' element={<UserProtectedRoute><ShowTournaments /></UserProtectedRoute>} />
+            {/* <Route path='/ShowTournaments' element={<UserProtectedRoute><ShowTournaments /></UserProtectedRoute>} /> */}
           {/* <Route path='/ShowTournaments' element={<userProtectedRoute><ShowTournaments /></userProtectedRoute>} /> */}
             <Route path='/trmntMdl'element={<TournamnetMdl/>}/>
             <Route path="/registration/:tournamentId" element={<RegistrationForm/>} />
