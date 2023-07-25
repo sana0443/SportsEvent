@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="w-1/5 bg-gray-900 text-white rounded-2xl ">
+    <div className="w-full md:w-1/5 bg-gray-900 text-white rounded-2xl">
       <div className="p-4">
         <h1
           href="/teams"
@@ -17,44 +18,44 @@ const Sidebar = () => {
       <nav className="py-4">
         <ul>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/admindsbd" className="block">
+            <Link to="/admindsbd" className="block">
               Dashboard
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/userlist" className="block">
+            <Link to="/userlist" className="block">
               Users
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/create_tournament" className="block">
+            <Link to="/create_tournament" className="block">
               Create A Tournament
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="tournaments" className="block">
+            <Link to="/tournaments" className="block">
               Tournaments
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/team" className="block">
+            <Link to="/team" className="block">
               Team
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/createSlot" className="block">
+            <Link to="/createSlot" className="block">
               Create Slot
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/slotz" className="block">
+            <Link to="/slotz" className="block">
               Slots
-            </a>
+            </Link>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="/booked" className="block">
+            <Link to="/booked" className="block">
               Booked Slots
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

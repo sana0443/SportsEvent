@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userLogout } from "../../Redux/userSlice";
 import { toast} from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -35,6 +36,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       localStorage.removeItem("token");
+      Cookies.remove('access_token')
       dispatch(userLogout());
       // setIsLoggedIn(false);
       navigate("/");
@@ -150,8 +152,8 @@ const Navbar = () => {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/"
+                              <Link
+                                to="/"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -159,7 +161,7 @@ const Navbar = () => {
                                 onClick={logout}
                               >
                                 Sign out
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>
@@ -167,12 +169,13 @@ const Navbar = () => {
                     </Menu>
                   </>
                 ) : (
-                  <a
-                    href="/login"
+                 
+                  <Link 
+                    to="/login"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Login
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

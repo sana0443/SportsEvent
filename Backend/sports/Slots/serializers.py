@@ -9,16 +9,20 @@ class TurfSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'location', 'contact_number', 'photo')
 
 class SlotSerializer(serializers.ModelSerializer):
+    turf = TurfSerializer()  # Include TurfSerializer to handle the turf field
+
     class Meta:
         model = Slot
         fields = ['id', 'turf', 'start_time', 'end_time', 'price', 'is_available']
 
+
 class BookingSerializer(serializers.ModelSerializer):
-    slot = SlotSerializer()
+    slot = SlotSerializer()  # Use the 'source' attribute to specify the related field name
 
     class Meta:
         model = Booking
-        fields = ['id', 'slot', 'name', 'phone_number', 'amount', 'is_paid', 'order_id']
+        fields = ['id', 'slot', 'name', 'phone_number', 'amount', 'is_paid', 'order_id', 'user']
+
 
     def create(self, validated_data):
         slot_data = validated_data.pop('slot')

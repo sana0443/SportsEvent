@@ -12,7 +12,7 @@ const turf_id=quaryParams.get('id');
   useEffect(() => {
     const fetchTurf = async () => {
       try {
-        const response = await axios.get(BaseUrl+`slots/turf_details/${turf_id}/`);
+        const response = await axios.get(BaseUrl+`/slots/turf_details/${turf_id}/`);
         setTurf(response.data);
         setLoading(false);
       } catch (error) {

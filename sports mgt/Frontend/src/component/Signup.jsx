@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,6 @@ const SignUpForm = () => {
   const [verify, setVerify] = useState(null);
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
-  let confirmationResult = null;
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,7 +71,7 @@ const SignUpForm = () => {
       return;
     }
 
-    const user = {
+    const userData = {
       email: email,
       password: password,
       password2: password2,
@@ -82,17 +81,14 @@ const SignUpForm = () => {
     };
 
     try {
-      const response = await axios.get(
-        BaseUrl+"account/register/",
-        {
-          params: {
-            email: email
-          }
+      const response = await axios.get(BaseUrl + "/account/register/", {
+        params: {
+          email: email
         }
-      );
+      });
 
       if (response.data.message === "success") {
-        onSignup();
+        onSignup(userData);
       } else {
         console.log("User exists. Terminate.");
       }
@@ -111,27 +107,27 @@ const SignUpForm = () => {
     }
   };
 
-  const onSignup = async () => {
+  const onSignup = async (userData) => {
     setLoading(true);
-    const appVerifier = new RecaptchaVerifier("recaptcha-container", {
-      size: "normal",
-      callback: (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // ...
-      },
-      "expired-callback": () => {
-        // Response expired. Ask user to solve reCAPTCHA again.
-        // ...
-      }
-    }, auth);
-
     const formatPhone = "+91" + phone_number;
-    confirmationResult = await signInWithPhoneNumber(auth, formatPhone, appVerifier);
-    setUser(confirmationResult);
-    setLoading(false);
-    setShowOtp(true);
-    setVerify(confirmationResult);
-    toast.success("OTP sent successfully!");
+
+    try {
+      const appVerifier = new RecaptchaVerifier( auth,"recaptcha-container", {
+        size: "normal",
+        callback: (response) => {},
+        "expired-callback": () => {}
+      });
+
+      const confirmationResult = await signInWithPhoneNumber(auth, formatPhone, appVerifier);
+      setUser(confirmationResult);
+      setLoading(false);
+      setShowOtp(true);
+      setVerify(confirmationResult);
+      toast.success("OTP sent successfully!");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   const onOTPVerify = async (e) => {
@@ -152,9 +148,10 @@ const SignUpForm = () => {
           age: age
         };
 
-        await axios.post(BaseUrl+"account/register/", userData);
+        await axios.post(BaseUrl + "/account/register/", userData);
         dispatch(setUserDetails(userData));
-        navigate("/login");
+        localStorage.setItem("token", userData.id)
+        navigate("/");
       } else {
         setError("Invalid OTP");
       }
@@ -168,88 +165,69 @@ const SignUpForm = () => {
   const handleChange = (event) => {
     setOtp(event.target.value);
   };
-
-  // const resendOTP = async () => {
-  //   try {
-  //     setLoading(true);
-  //     await confirmationResult.resend();
-  
-  //     setShowOtp(true);
-  //     toast.success("OTP resent successfully!");
-  //   } catch (error) {
-  //     setError("Failed to resend OTP");
-  //   }
-  
-  //   setLoading(false);
-  // };
-  
-  
-
-
-  
-
 return (
   <>
   {showOtp ? (
-    <section className="p-20 h-screen bg-gradient-to-t from-white to-blue-200 flex flex-col pt-10 px-20 justify-between">
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="hidden md:block relative w-1/2 h-full flex-col">
-          <div className="absolute top-[15%] flex flex-col items-center">
-            <h1 className="text-4xl text-black font-bold my-3 text-center">
-              Unlock unforgettable experiences.
-            </h1>
-            <p className="text-xl text-white font-normal text-center">
-              Sign in and secure your future in sports events with our seamless facilities and events.
-            </p>
-          </div>
-          {/* <img src={signupimg} alt="Login" className="w-full h-full object-cover" /> */}
-        </div>
-
-        <div className="w-1/2 h-full bg-gradient-to-r from-gray-200 to-gray-500 flex flex-col p-20 justify-between">
-          <div className="w-full flex flex-col">
-            <div className="w-full flex flex-col mb-2 max-w-[450px]">
-              <h3 className="text-3xl font-bold mb-2">Verify OTP</h3>
-              <p className="text-base mb-2">
-                Welcome to EventGo! Please verify your account.
-              </p>
-            </div>
-
-            <div className="w-full flex flex-col pt-10">
-              <input
-                type="number"
-                onChange={handleChange}
-                // onBlur={handleBlur}
-                name="otp"
-                value={otp}
-                className="w-full text-black py-1 my-2 border-b bg-transparent border-black outline-none focus:outline-none"
-              />
-            </div>
-
-            <div className="w-full flex flex-col pt-10">
-              <button
-                onClick={onOTPVerify}
-                className="text-white w-full bg-violet-500 hover:bg-violet-700 rounded-md p-4 mt-5 text-center flex items-center justify-center"
-              >
-                {loading && (
-                  <CgSpinner size={20} className="mt-1 animate-spin" />
-                )}
-                <span>Verify</span>
-              </button>
-              {/* <button
-                onClick={resendOTP}
-                className="text-white w-full bg-violet-500 hover:bg-violet-700 rounded-md p-4 mt-5 text-center flex items-center justify-center"
-              >
-                {loading && (
-                  <CgSpinner size={20} className="mt-1 animate-spin" />
-                )}
-                <span>Resend OTP</span>
-              </button> */}
-            </div>
-          </div>
-        </div>
-        <Toaster />
-      </div>
-    </section>
+   <section className="p-5 md:p-20 h-screen bg-gradient-to-t from-white to-blue-200 flex flex-col pt-10 md:pt-0 md:flex-row px-5 md:px-20 justify-between">
+   <div className="w-full md:w-1/2 h-full flex items-center justify-center">
+     <div className="hidden md:block relative w-full h-full">
+       <div className="absolute top-1/4 md:top-[15%] flex flex-col items-center">
+         <h1 className="text-4xl md:text-5xl text-black font-bold my-3 text-center">
+           Unlock unforgettable experiences.
+         </h1>
+         <p className="text-xl md:text-2xl text-white font-normal text-center">
+           Sign in and secure your future in sports events with our seamless facilities and events.
+         </p>
+       </div>
+       {/* <img src={signupimg} alt="Login" className="w-full h-full object-cover" /> */}
+     </div>
+   </div>
+ 
+   <div className="w-full md:w-1/2 h-full bg-gradient-to-r from-gray-200 to-gray-500 flex flex-col p-5 md:p-20 justify-between">
+     <div className="w-full flex flex-col">
+       <div className="w-full flex flex-col mb-2 max-w-[450px]">
+         <h3 className="text-3xl md:text-4xl font-bold mb-2">Verify OTP</h3>
+         <p className="text-base md:text-xl mb-2">
+           Welcome to EventGo! Please verify your account.
+         </p>
+       </div>
+ 
+       <div className="w-full flex flex-col pt-5 md:pt-10">
+         <input
+           type="number"
+           onChange={handleChange}
+           // onBlur={handleBlur}
+           name="otp"
+           value={otp}
+           className="w-full text-black py-2 md:py-1 my-2 border-b bg-transparent border-black outline-none focus:outline-none"
+         />
+       </div>
+ 
+       <div className="w-full flex flex-col pt-5 md:pt-10">
+         <button
+           onClick={onOTPVerify}
+           className="text-white w-full bg-violet-500 hover:bg-violet-700 rounded-md p-4 mt-5 text-center flex items-center justify-center"
+         >
+           {loading && (
+             <CgSpinner size={20} className="mt-1 animate-spin" />
+           )}
+           <span>Verify</span>
+         </button>
+         {/* <button
+           onClick={resendOTP}
+           className="text-white w-full bg-violet-500 hover:bg-violet-700 rounded-md p-4 mt-5 text-center flex items-center justify-center"
+         >
+           {loading && (
+             <CgSpinner size={20} className="mt-1 animate-spin" />
+           )}
+           <span>Resend OTP</span>
+         </button> */}
+       </div>
+     </div>
+   </div>
+   <Toaster />
+ </section>
+ 
     ) : (
       <div className="bg-gray-900 min-h-screen flex justify-center items-center">
         <section className="bg-gray-800 dark:bg-gray-1900">
@@ -416,12 +394,12 @@ return (
                   </button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Already have an account?{" "}
-                    <a
-                      href="#"
+                    <Link
+                      to="/login"
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                     >
                       Login here
-                    </a>
+                    </Link>
                   </p>
                 </form>
       

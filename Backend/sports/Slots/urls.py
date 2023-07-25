@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SlotListView, SlotDetailView, UserInfoView,TurfListAPIView,Start_payment,Handle_payment_success,BookingAPIView,TurfDetailAPIView,TurfBookedSlotsAPIView
+from .views import SlotListView, SlotDetailView, UserInfoView,TurfListAPIView,Start_payment,Handle_payment_success,BookingAPIView,TurfDetailAPIView,TurfBookedSlotsAPIView,UserBookedSlotsView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path('booked_slots/<int:turf_id>/', TurfBookedSlotsAPIView.as_view(), name='turf-booked-slots'),
     path('start_payment/<int:turf_id>/', Start_payment, name='start_payment'),
     path('handle_payment_success/', Handle_payment_success, name='handle_payment_success'),
+    path('user_booked_slots/<user_id>/', UserBookedSlotsView.as_view(), name='user-booked-slots'),
     # path('slots/<int:pk>/book/', SlotBookingView.as_view(), name='slot-booking'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

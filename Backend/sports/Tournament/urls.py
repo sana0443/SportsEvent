@@ -13,6 +13,7 @@ urlpatterns = [
     path('players/create/', PlayerCreateView.as_view(), name='player-create'),
     path('team-data/<int:user_id>/', TeamDataView.as_view(), name='team-data'),
     path('player-data/<int:user_id>/', PlayerDataView.as_view(), name='player-data'),
+    path('book/', views.TournamentBookingView.as_view(), name='tournament-book'),
  
     path('team/', TeamListView.as_view()),
     path('team/<int:pk>/', TeamListView.as_view())

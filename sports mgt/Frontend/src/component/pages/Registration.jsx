@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { toast} from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert';
 import BaseUrl from '../../BaseUrl';
 
 
 function RegistrationForm() {
+  const { tournamentId } = useParams();
   const [teamName, setTeamName] = useState('');
   const [teamLogo, setTeamLogo] = useState(null);
   const [teamData, setTeamData] = useState(null);
   const [ageError, setAgeError] = useState(false);
   const [playerErrors, setPlayerErrors] = useState([]);
+  const [tournaments, setTournaments] = useState([]);
 
   const [captain, setCaptain] = useState({
     name: '',
@@ -107,7 +109,7 @@ function RegistrationForm() {
   };
 
   console.log(players,"playerrrrrrrrrrrrrrrrrrrr");
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, selectedTournament) => {
     e.preventDefault();
   
     const formData = new FormData();
@@ -125,6 +127,36 @@ function RegistrationForm() {
       formData.append(`players[${index}][position]`, player.position);
       formData.append(`players[${index}][additional_info]`, player.additionalInfo);
     });
+
+
+    const handleBooking = async () => {
+      try {
+        const response = await fetch(BaseUrl + '/Tournament/book/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ tournamentId: selectedTournament.id }),
+        });
+  
+        if (response.ok) {
+          // Update the available slots on the frontend after successful booking
+          const updatedTournaments = tournaments.map((tournament) =>
+            tournament.id === selectedTournament.id
+              ? { ...tournament, available_slots: tournament.available_slots - 1 }
+              : tournament
+          );
+          setTournaments(updatedTournaments);
+  
+          // Rest of the function...
+        } else {
+          throw new Error('Booking failed');
+        }
+      } catch (error) {
+        console.error('Booking failed:', error);
+        // Handle booking failure
+      }
+    };
   
     // Add CSRF token to headers
     const csrftoken = getCookie('csrftoken');
@@ -170,6 +202,8 @@ function RegistrationForm() {
                   throw new Error(`Error creating player: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
+
+
               })
               .then((data) => {
                 return data;
@@ -194,6 +228,7 @@ function RegistrationForm() {
         if (playerCreationErrors.length === 0) {
           console.log('Registration successful');
           toast.success('Registartion successfull')
+          handleBooking();
 
           Swal({
         title: 'Registration Successful',

@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
 import { Button } from "@material-tailwind/react";
-
-
 import TournamnetMdl from '../Modal/TournamnetMdl';
-import { format } from 'date-fns'; 
+import { format } from 'date-fns';
 import BaseUrl from '../../BaseUrl';
-
 
 function ShowTournaments() {
   const [tournaments, setTournaments] = useState([]);
   const [error, setError] = useState(null);
   const [modal, setModal] = useState(false);
   const [selectedTournament, setSelectedTournament] = useState(null);
-  const [tournamentId,setTournamentId]=useState(null)
-
 
   useEffect(() => {
     fetchTournaments();
@@ -22,14 +16,11 @@ function ShowTournaments() {
 
   const fetchTournaments = async () => {
     try {
-      const response = await fetch(BaseUrl+'/Tournament/list/');
+      const response = await fetch(BaseUrl + '/Tournament/list/');
 
       if (response.ok) {
         const data = await response.json();
         setTournaments(data);
-        setTournamentId(tournaments.id)
-        console.log(tournamentId,'hhhhhhhh');
-        console.log(data,'------------');
       } else {
         throw new Error('Error fetching tournaments');
       }
@@ -39,16 +30,8 @@ function ShowTournaments() {
     }
   };
 
-
-  useEffect(() => {
-    console.log('tournamentId:', tournamentId); // Check if tournamentId state updates correctly
-  }, [tournamentId]);
   const openModal = (tournament) => {
     setSelectedTournament(tournament);
-    setTournamentId(tournament.id);
-   
-  
-    console.log(tournament.id,'----------rrrrrrrrr');
     setModal(true);
   };
 
@@ -56,15 +39,45 @@ function ShowTournaments() {
     setModal(false);
   };
 
+  const handleBooking = async () => {
+    try {
+      // Simulate booking by making an API call to the backend
+      const response = await fetch(BaseUrl + '/Tournament/book/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tournamentId: selectedTournament.id }),
+      }); 
+
+      if (response.ok) {
+        // Update the available slots on the frontend after successful booking
+        const updatedTournaments = tournaments.map((tournament) =>
+          tournament.id === selectedTournament.id
+            ? { ...tournament, available_slots: tournament.available_slots - 1 }
+            : tournament
+        );
+        setTournaments(updatedTournaments);
+        closeModal();
+      } else {
+        throw new Error('Booking failed');
+      }
+    } catch (error) {
+      console.error('Booking failed:', error);
+      // Handle booking failure
+    }
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   const backgroundImage = "url('https://t4.ftcdn.net/jpg/01/36/03/77/360_F_136037708_jaqEW7Qr7uZ2uynTURhQe9N0LDGkgbxG.jpg')";
+
   return (
     <>
       <TournamnetMdl isVisible={modal} onClose={closeModal} tournament={selectedTournament} />
-      
+
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 relative" style={{ backgroundImage, backgroundSize: 'cover' }}>
         <div className="py-8">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,8 +88,20 @@ function ShowTournaments() {
                   <h3 className="text-xl font-bold mb-2">{tournament.title}</h3>
                   <p className="text-gray-700 mb-2">{tournament.event_name}</p>
                   <p className="text-gray-700 mb-2">{format(new Date(tournament.date), 'MMMM d')}</p>
-                  {/* Add other tournament information here */}
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => openModal(tournament)}>View the details</button>
+                  <p className="text-gray-700 mb-2">Available Slots: {tournament.available_slots}</p>
+                  {tournament.available_slots === 0 ? (
+                    <p className="text-red-500">Booking Filled</p>
+                  ) : (
+                    <p className="text-green-500">{tournament.available_slots} Slots Remaining</p>
+                  )}
+                  <Button
+                    color="blue"
+                    size="regular"
+                    onClick={() => openModal(tournament)}
+                  >
+                    View the details
+                  </Button>
+                 
                 </div>
               ))}
             </div>

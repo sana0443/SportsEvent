@@ -48,7 +48,7 @@ function Edit_slot() {
 
   const fetchSlotData = () => {
     axios
-      .get(BaseUrl+`AdminSide/slot/${id}/`)
+      .get(BaseUrl+`/AdminSide/slot/${id}/`)
       .then((response) => {
         const slotData = response.data;
         console.log(slotData,'slotrrrrrr');
@@ -80,7 +80,7 @@ function Edit_slot() {
     const formattedEndTime = endTime && selectedDate ? selectedDate.format('YYYY-MM-DD') + ' ' + endTime.format('HH:mm') : null;
 
     axios
-      .put(BaseUrl+`AdminSide/slot/${id}/`, {
+      .put(BaseUrl+`/AdminSide/slot/${id}/`, {
         turf: turf.id,
         start_time: formattedStartTime,
         end_time: formattedEndTime,

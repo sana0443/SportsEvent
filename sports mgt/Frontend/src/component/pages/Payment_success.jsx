@@ -15,7 +15,7 @@ function PaymentSuccess() {
   const price = location.state?.amount;
   const turf_id = location.state?.turf_id;
   const date=location.state?.date
- 
+  const user=localStorage.getItem('token')
 
   console.log(slot, 'slotttttuu');
   console.log(end, 'endddddddddd');
@@ -43,6 +43,7 @@ function PaymentSuccess() {
           is_paid: true,
           order_id: order_id,
           slot: slotData,
+          user:user
         };
     
         const response = await axios.post(BaseUrl+'/slots/booking/', bookingData);

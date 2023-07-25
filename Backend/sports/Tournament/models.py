@@ -31,6 +31,6 @@ class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='players')
 
 
-class TournamentRegistration(models.Model):
-    user = models.ForeignKey(signup, on_delete=models.CASCADE, related_name='tournament_registrations')
-    tournament = models.ForeignKey(Tournament_ancmt, on_delete=models.CASCADE, related_name='registrations')
+# class TournamentRegistration(models.Model):
+#     user = models.ForeignKey(signup, on_delete=models.CASCADE, related_name='tournament_registrations')
+#     tournament = models.ForeignKey(Tournament_ancmt, on_delete=models.CASCADE, related_name='registrations')

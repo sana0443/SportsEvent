@@ -8,7 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import PaymentSuccess from '../pages/Payment_success';
 
 
+
 function TurfMdl({ onClose, slot, details,turfId ,bookedSlots }) {
+
+  const [success, setSuccess] = useState(false); 
     const navigate=useNavigate()
     const dispatch=useDispatch()
   const [selectedDate, setSelectedDate] = useState(null);
@@ -22,6 +25,10 @@ function TurfMdl({ onClose, slot, details,turfId ,bookedSlots }) {
     if (e.target.id === 'wrapper') {
       onClose();
     }
+  };
+
+  const handleSuccess = () => {
+    setSuccess(true);
   };
   const isSlotBooked = (startTime) => {
     return bookedSlots.some((slot) => moment(slot.start_time).format('HH:mm') === startTime);
@@ -99,49 +106,68 @@ const prices=filteredSlots.map((item)=>(item.price))
 
 console.log(times,end,'timeeeeeeeeeeeee');
 
-  return (
-    <div>
-        <PaymentSuccess slotTime={selectedTime} />
-      <div
-        id="wrapper"
-        className="absolute inset-0 bg-black bg-opacity-25 z-10 backdrop-blur-sm w-full h-full flex justify-center items-center"
-        onClick={handleClose}
-      >
-        <div className="w-[900px] flex flex-col overflow-y-auto h-[600px]">
-          <button className="text-white text-xl place-self-end" onClick={onClose}>
-            x
-          </button>
-          <div className="bg-white p-1 rounded-lg overflow-y-auto">
-            <DatePicker disabledDate={disabledDate} value={selectedDate} onChange={handleDateChange} />
-            {selectedDate && (
-   <ul>
-{times.map((startTime, index) => (
-  <li
-    key={startTime}
-    className={`time-card ${selectedTime === startTime ? 'selected' : ''}`}
-    style={{  backgroundColor: selectedTime === startTime ? '#f2f2f2' : 'transparent', }}
-    onClick={() => !isSlotBooked(startTime) && handleTimeClick(startTime, end[index], prices[index])}
-    disabled={isSlotBooked(startTime)} // Disable the slot if it's booked
-  >
-    {startTime}-{end[index]}--{prices[index]}
-  </li>
-))}
-
- </ul>
-)}
-
-
-
-
-
-<Button type="button" onClick={handleFormSubmit} disabled={!selectedTime}>
-              Register
-            </Button>
-          </div>
+return (
+  <div>
+      {success && <PaymentSuccess slotTime={selectedTime} />}
+    <div
+      id="wrapper"
+      className="absolute inset-0 bg-black bg-opacity-25 z-10 backdrop-blur-sm w-full h-full flex justify-center items-center"
+      onClick={handleClose}
+    >
+      <div className="w-[900px] flex flex-col overflow-y-auto h-[600px]">
+        <button className="text-white text-xl place-self-end" onClick={onClose}>
+          x
+        </button>
+        <div className="bg-white p-4 rounded-lg overflow-y-auto">
+          <DatePicker disabledDate={disabledDate} value={selectedDate} onChange={handleDateChange} />
+          {selectedDate && (
+            <ul className="mt-4">
+              {times.map((startTime, index) => (
+                <li
+                  key={startTime}
+                  className={`time-card ${
+                    selectedTime === startTime ? 'selected bg-blue-500 text-white' : 'bg-white text-gray-800'
+                  }`}
+                  onClick={() => !isSlotBooked(startTime) && handleTimeClick(startTime, end[index], prices[index])}
+                  disabled={isSlotBooked(startTime)}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold">{startTime}</span>
+                    {isSlotBooked(startTime) ? (
+                      <span className="text-red-500">Booked</span>
+                    ) : (
+                      <span className="text-green-500">Available</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className="text-xs">{end[index]}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs">Price: {prices[index]}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="mt-4 flex justify-end">
+          <Button
+            color="blue"
+            buttonType="filled"
+            size="regular"
+            rounded={false}
+            block={false}
+            icononly={false}
+            onClick={handleFormSubmit}
+            disabled={!selectedTime || isSlotBooked(selectedTime)}
+          >
+            Book Slot
+          </Button>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default TurfMdl;

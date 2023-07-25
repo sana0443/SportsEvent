@@ -70,12 +70,13 @@ function Payment() {
       bodyData.append('start_time', slot);
       bodyData.append('end_time', end_time);
 
+      bodyData.append('user_id', user);
       
     //   bodyData.append('student_id', studentId);
-    console.log(bodyData,'bodyyyyyyy');
+    console.log(bodyData,'bodyyyyyyycccccccc');
    
     console.log(price);
-     const response = await axios.post(BaseUrl+`slots/start_payment/${turf_id}/`, bodyData, {
+     const response = await axios.post(BaseUrl+`/slots/start_payment/${turf_id}/`, bodyData, {
   headers: {
     'Content-Type': 'application/json',
   },

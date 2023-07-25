@@ -51,7 +51,7 @@ const TournamentList = () => {
   const handleDelete = async (tournamentId) => {
     console.log(`Delete tournament with ID: ${tournamentId}`);
     try {
-      await axios.get(BaseUrl+`AdminSide/delete/${tournamentId}/`);
+      await axios.get(BaseUrl+`/AdminSide/delete/${tournamentId}/`);
       fetchTournaments();
       toast.success('Tournament deleted successfully');
     } catch (error) {

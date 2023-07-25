@@ -32,10 +32,13 @@ import CreateSlotForm from './Admin/create_slot';
 import BookedSlots from './Admin/BookedSlots';
 import Slots_list from './Admin/Slots_list';
 import Edit_slot from './Admin/Edit_slot';
+// import UserProtectedRoute from './Context/userProtectedRoute';
+
 // import Slots from './component/pages/Slots';
 // import SlotCard from './component/SlotsCard';
 // import Otp from './component/Otp/Otp';
-// import { UserAuthContextProvider } from './Context/AuthContext';
+
+
 
 function App() {
   return (
@@ -54,7 +57,11 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/tournaments' element={<TournamentList />} />
             <Route path='/Sidebar' element={<Sidebar />} />
-            <Route path='/ShowTournaments' element={<ShowTournaments/>}/>
+
+            <Route path='/ShowTournaments' element={<ShowTournaments />}/>
+
+            {/* <Route path='/ShowTournaments' element={<UserProtectedRoute><ShowTournaments /></UserProtectedRoute>} /> */}
+          {/* <Route path='/ShowTournaments' element={<userProtectedRoute><ShowTournaments /></userProtectedRoute>} /> */}
             <Route path='/trmntMdl'element={<TournamnetMdl/>}/>
             <Route path="/registration/:tournamentId" element={<RegistrationForm/>} />
             {/* <Route path='/slots' element={<SlotList/>}/> */}

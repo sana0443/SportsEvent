@@ -9,6 +9,7 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const backgroundImage = 'url("https://www.monaco.edu/app/uploads/sites/4/2021/07/Sports_Management.jpg")';
@@ -30,12 +31,12 @@ const HomePage = () => {
             <p className="text-gray-600">
               Explore and register for upcoming tournaments in various sports.
             </p>
-            <a
-              href="/ShowTournaments"
+            <Link
+              to="/ShowTournaments"
               className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
             >
               View Tournaments
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -43,12 +44,12 @@ const HomePage = () => {
             <p className="text-gray-600">
               Go through our past and facilities
             </p>
-            <a
-              href="/teams"
+            <Link
+              to="/about"
               className="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
             >
               Click here
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -113,12 +114,12 @@ const HomePage = () => {
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <h2 className="text-xl font-semibold mb-2">Book a slot</h2>
                   <p className="text-gray-600">Explore the facilities</p>
-                  <a
-                    href="/teams"
+                  <Link
+                    to="/turfs"
                     className="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
                   >
                     Click here
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

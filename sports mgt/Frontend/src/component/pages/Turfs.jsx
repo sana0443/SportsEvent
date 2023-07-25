@@ -42,7 +42,7 @@ function Turfs() {
   const openModal = async (turfId) => {
     setSelectedTurfId(turfId);
     try {
-      const response = await axios.get(BaseUrl+`slots/booked_slots/${turfId}/`);
+      const response = await axios.get(BaseUrl+`/slots/booked_slots/${turfId}/`);
       setModal(true);
       console.log(response.data,'bookkedddddd---------');
       setBookedSlots(response.data); // Assuming the response contains the booked slots data
@@ -59,7 +59,7 @@ function Turfs() {
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}slots/slots/${selectedTurfId}/`);
+      const response = await axios.get(`${BaseUrl}/slots/slots/${selectedTurfId}/`);
       // Handle the fetched slots data as needed
       console.log(response.data,'itttttttttttt');
       setSlots(response.data)

@@ -67,7 +67,7 @@ const UserList = () => {
       return;
     }
 
-    fetch(BaseUrl+`AdminSide/blockUser/${userId}`, {
+    fetch(BaseUrl+`/AdminSide/blockUser/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const UserList = () => {
       return;
     }
 
-    fetch(BaseUrl+`AdminSide/unblockUser/${userId}`, {
+    fetch(BaseUrl+`/AdminSide/unblockUser/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -100,6 +100,24 @@ class TeamListView(APIView):
             return Response(serializer.data)
         
 
+
+class TournamentBookingView(APIView):
+    def post(self, request):
+        tournament_id = request.data.get('tournamentId')
+        try:
+            tournament = Tournament_ancmt.objects.get(id=tournament_id)
+        except Tournament_ancmt.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        if tournament.available_slots > 0:
+            # Update available slots and perform booking logic
+            tournament.available_slots -= 1
+            tournament.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+
 class TeamDataView(APIView):
     def get_teams_for_user(self, user_id):
         # Get all teams and then filter the ones with players belonging to the user's teams

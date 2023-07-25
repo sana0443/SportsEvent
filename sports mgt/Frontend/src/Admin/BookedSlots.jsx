@@ -75,7 +75,7 @@ function BookedSlots() {
                   {booking.id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {booking.slot ? booking.slot.turf : '-'}
+                  {booking.slot ? booking.slot.turf.id : '-'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                 {booking.slot ? moment(booking.slot.start_time).format('YYYY-MM-DD') : '-'}

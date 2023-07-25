@@ -74,7 +74,7 @@ const TournamentEditForm = () => {
 
   const fetchTournament = async () => {
     try {
-      const response = await axios.get(BaseUrl+`Tournament/Tournament/detail/${id}/`);
+      const response = await axios.get(BaseUrl+`/Tournament/Tournament/detail/${id}/`);
       const tournamentData = response.data;
       setEventData(tournamentData);
       setEvent_name(tournamentData.event_name || '');
@@ -183,7 +183,7 @@ const TournamentEditForm = () => {
           description,
         };
     axios
-      .put(BaseUrl+`Tournament/Tournament/detail/${id}/`, updatedData)
+      .put(BaseUrl+`/Tournament/Tournament/detail/${id}/`, updatedData)
       .then((response) => {
         console.log(response.data);
         toast.success('Successfully edited')

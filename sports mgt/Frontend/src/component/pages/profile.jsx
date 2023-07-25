@@ -14,6 +14,7 @@ export function Profile() {
   const [teamData, setTeamData] = useState(null);
   const [playerData, setPlayerData] = useState([]);
   const image = {url:("/src/image/profileImage.jpg")}
+  const [bookedSlots, setBookedSlots] = useState([]);
  
 
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export function Profile() {
     if (user_id) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(BaseUrl+"account/userdata", {
+          const response = await axios.get(BaseUrl+"/account/userdata", {
             params: {
               user_id: user_id,
             },
@@ -82,7 +83,7 @@ export function Profile() {
       try {
         // Fetch team data using the user_id (replace 'user_id' with the actual user ID)
         const user_id = localStorage.getItem("token");
-        const teamResponse = await axios.get(BaseUrl+`Tournament/team-data/${user_id}/`);
+        const teamResponse = await axios.get(BaseUrl+`/Tournament/team-data/${user_id}/`);
         console.log(teamResponse,'dddddd');
         setTeamData(teamResponse.data);
         console.log(teamData,'teaaaaa');
@@ -96,7 +97,7 @@ export function Profile() {
         // Fetch player data using the user_id (replace 'user_id' with the actual user ID)
         const user_id = localStorage.getItem("token");
         console.log(user_id);
-        const playerResponse = await axios.get(BaseUrl+`Tournament/player-data/${user_id}/`);
+        const playerResponse = await axios.get(BaseUrl+`/Tournament/player-data/${user_id}/`);
         console.log(playerResponse,'at-------------');
         setPlayerData(playerResponse.data);
       } catch (error) {
@@ -109,9 +110,22 @@ export function Profile() {
     fetchPlayerData();
   }, []);
 
+ 
   
-  
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      try {
+        const user_id = localStorage.getItem("token");
+        const response = await axios.get(BaseUrl+`/slots/user_booked_slots/${user_id}/`);
+        setBookedSlots(response.data);
+        console.log(response.data,'user sloted');
+      } catch (error) {
+        console.error("Error fetching booked slots:", error);
+      }
+    };
 
+    fetchBookedSlots();
+  }, []);
 
 
 
@@ -129,7 +143,12 @@ export function Profile() {
       <section className="relative bg-blue-gray-50/50 py-16 px-4">
         <div className="container mx-auto">
           <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
+            
             <div className="px-6">
+            {/* <div className="mt-16 flex w-full justify-start px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-start  lg:self-center">
+                  <Button className="bg-blue-400" onClick={() => openModal(userData)}>Booked Slot</Button>
+                </div> */}
+              
               <div className="flex flex-wrap justify-center">
                 <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
                   <div className="relative">
@@ -153,6 +172,7 @@ export function Profile() {
                 <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
                   <Button className="bg-blue-400" onClick={() => openModal(userData)}>Update</Button>
                 </div>
+              
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">
                   <div className="flex justify-center py-4 pt-8 lg:pt-4">
                     <div className="mr-4 p-3 text-center">
@@ -227,7 +247,40 @@ export function Profile() {
     </div>
   )}
 </div>
+<div className="flex justify-center">
+{bookedSlots.length > 0 && (
+        <div className="mt-10 border-t border-blue-gray-50 py-6 text-center ">
+          <div>
+            
+            <h2 className="text-2xl font-bold mb-4">Booked Slots</h2>
+            <div className="grid grid-cols-4 gap-4 justify-center">
+              {bookedSlots.map((slot) => {
+                // Convert the start_time to a Date object
+                const bookingDate = new Date(slot.start_time);
+                // Format the bookingDate to display the date in a human-readable format
+                const formattedDate = bookingDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                });
+
+                return (
+                  <div key={slot.id} className="p-4 border rounded-lg shadow-lg">
+                    <p className="text-lg font-semibold">Slot ID: {slot.id}</p>
+                    <p className="text-lg font-semibold">Start Time: {formattedDate}</p>
+                    <p className="text-lg font-semibold">End Time: {slot.end_time}</p>
+                    <p className="text-lg font-semibold">Price: {slot.price}</p>
+                   
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
+         
+      )}
+        </div>
+      </div>
       </div>
             </div>
           </div>

@@ -57,7 +57,7 @@ function CreateSlotForm() {
     });
   
     axios
-      .get(BaseUrl+`AdminSide/existingSlots/?${params}`)
+      .get(BaseUrl+`/AdminSide/existingSlots/?${params}`)
       .then((response) => {
         console.log('Fetched existing slots:', response.data);
         setExistingSlots(response.data);

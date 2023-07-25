@@ -94,6 +94,17 @@ class UserInfoView(TokenObtainPairView):
 
 
 
+class UserBookedSlotsView(APIView):
+    def get(self, request, user_id):
+        # Assuming signup is the user model, replace it with your actual user model if different
+        user = signup.objects.get(id=user_id)
+        booked_slots = Slot.objects.filter(booking__user=user)
+        serializer = SlotSerializer(booked_slots, many=True)
+        return Response(serializer.data)
+    
+
+
+
 @api_view(['POST'])
 def Start_payment(request,turf_id):
     print(request.data)
@@ -101,6 +112,7 @@ def Start_payment(request,turf_id):
 
     amount = request.data['price']
     turf_id = request.data['turf_id']
+    user=request.data['user_id']
     print(turf_id,'--------0-------------')
 
 
@@ -135,6 +147,7 @@ def Start_payment(request,turf_id):
             slot = Slot.objects.get(id=turf_id)
             order = Booking.objects.create(
                 slot=slot,
+                user=user,
                 amount=int(amount),
                 start_time=start_datetime,
                 end_time=end_datetime,

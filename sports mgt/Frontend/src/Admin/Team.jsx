@@ -64,9 +64,9 @@ function Team() {
 
                         </td>
                         <td className="border px-4 py-2">
-                          <a href="#" onClick={() => viewDetails(team.id)}>
+                          <Link to="#" onClick={() => viewDetails(team.id)}>
                             <img src={`${BaseUrl}${team.logo}`} alt={team.team_name} className="h-10 w-10" />
-                          </a>
+                          </Link>
                         </td>
                       </tr>
                         ))}

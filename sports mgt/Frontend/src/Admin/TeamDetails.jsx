@@ -18,7 +18,7 @@ console.log(team_id);
 
   const fetchTeamDetails = async () => {
     try {
-      const response = await fetch(BaseUrl+`Tournament/team/${ teamId}/`);
+      const response = await fetch(BaseUrl+`/Tournament/team/${ teamId}/`);
       if (response.ok) {
         const teamData = await response.json();
         setTeam(teamData); 

@@ -31,7 +31,7 @@ const SlotsList = () => {
 
   const handleDeleteSlot = async (slotId) => {
     try {
-      await axios.delete(BaseUrl+`AdminSide/slotdelete/${slotId}`);
+      await axios.delete(BaseUrl+`/AdminSide/slotdelete/${slotId}`);
       // After successful deletion, fetch the updated slots
       toast.success('Successfully Deleted')
       fetchSlots();

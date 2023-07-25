@@ -41,21 +41,25 @@ def index(request):
     pass
 
 class UserSignup(APIView):
+    print("user signup  contianer outside")
     def get(self, request):
         if request.method == 'GET':
+            print(' indide get ')
             email = request.GET.get('email')
-            print(email,'thisis-------------------------')
+            print(email,'email  in get method---------------------')
             try:
                 user = signup.objects.get(email=email)
+                print('existing email', user)
 
                 return Response({'message':'Email already Exists'})
             except:
                 return Response({'message':'success'})
     def post(self,request):
+            print(' inside post in singup')
             serializer = Signupserializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 email = serializer.validated_data.get('email')
-            
+                print(' emial from serializer output', email)
                 # Check if the user already exists in the backend
                 existing_user = User.objects.filter(email=email).exists()
                 if existing_user:
@@ -67,6 +71,7 @@ class UserSignup(APIView):
                 #     return Response({"success": False, "errors": {"otp": "Invalid OTP."}}, status=status.HTTP_400_BAD_REQUEST)
 
                 else:
+                    print(" post elese")
                     serializer.save()
                     return Response({"success": True, "message": "not exsisting"}, status=status.HTTP_201_CREATED)
             else:
@@ -74,8 +79,10 @@ class UserSignup(APIView):
                 for field, field_errors in serializer.errors.items():
                     # Customize the error messages based on the field
                     if field == 'password':
+                        print(' if error', errors)
                         errors[field] = "Invalid password."
                     else:
+                        print('else errors', errors)
                         errors[field] = field_errors[0]  # Use the first error message
 
                 return Response({"success": False, "errors": errors}, status=status.HTTP_400_BAD_REQUEST)
