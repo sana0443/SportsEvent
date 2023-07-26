@@ -4,7 +4,7 @@ from .models import Tournament_ancmt,Player,Team
 class TournamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tournament_ancmt
-        fields = ['id','event_name','title','date','total_no_of_teams','description','registration_open','registration_deadline','available_slots']
+        fields = ['id','event_name','title','date','total_no_of_teams','description','registration_open','registration_deadline','available_slots','image']
 
 
 

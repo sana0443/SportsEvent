@@ -68,12 +68,12 @@ const AdminDashboard = () => {
       </section>
       <section className="relative bg-blue-gray-50/50 py-16 px-4">
         <div className="container mx-auto">
-          <div className="relative mb-6 -mt-64 flex w-full min-w-0 break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
+          <div className="relative mb-6 -mt-64 flex sm:w-2/3 md:w-full lg:w-full xl:w-full break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
             <Sidebar />
             {/* change */}
         
-<div className="flex-1 bg-gray-200">
-  <div className="p-4">
+            <div className="min-h-screen bg-gray-600  w-full min-w-0 p-4  lg:w-full xl:w-full mx-auto">
+  <div className="p-4 bg-black">
     <h1 className="text-2xl text-center font-semibold">Welcome to the Admin Dashboard</h1>
   </div>
   <div className="p-4">

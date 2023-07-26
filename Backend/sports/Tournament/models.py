@@ -6,6 +6,7 @@ from account.models import signup
 class Tournament_ancmt(models.Model):
     event_name=models.CharField(max_length=450)
     title=models.CharField(max_length=450)
+    image=models.ImageField(upload_to='tournaments')
     date=models.DateTimeField()
     total_no_of_teams=models.IntegerField()
     description=models.CharField(max_length=450)

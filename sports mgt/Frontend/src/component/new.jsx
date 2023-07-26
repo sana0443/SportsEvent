@@ -109,10 +109,10 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="flex justify-start pt-14 pl-28">
-              <div className="mt-16 flex flex-wrap items-center">
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-xl font-semibold mb-2">Book a slot</h2>
+            <div className="grid lg:grid-cols-2 justify-center pt-14 pl-28">
+              
+                <div className="bg-white w-96 text-center rounded-lg shadow-lg p-6">
+                  <h2 className="text-xl font-semibold pt-16 mb-2">Book a slot</h2>
                   <p className="text-gray-600">Explore the facilities</p>
                   <Link
                     to="/turfs"
@@ -122,13 +122,15 @@ const HomePage = () => {
                   </Link>
                 </div>
                 
+                <div className='w-full'>
                 <Typography
                   variant="h3"
-                   className="mx-auto mt-24 flex w-full justify-center px-4 md:w-4/12 lg:mt-0"
+                   className="mx-auto mt-24 flex w-full justify-center px-4  lg:mt-0"
                   color="blue-gray"
                 >
                   here the fecility
                 </Typography>
+                <br/>
                 <Typography className="mb-8  font-normal text-blue-gray-500">
                   Our user-friendly interface and powerful features make it easy to organize and coordinate sports activities, ensuring smooth communication, efficient scheduling, and seamless collaboration.
                   Join our growing community of sports enthusiasts and experience the joy of sports management like never before!
@@ -137,10 +139,11 @@ const HomePage = () => {
                   Discover and register for upcoming tournaments in various sports, from soccer to basketball and more.
                   Create and manage teams for different sports and events, bringing together talented individuals to compete and achieve greatness.
                 </Typography>
+                </div>
               </div>
             </div>
 
-          </div>
+          
         </section>
       </div>
 

@@ -20,7 +20,7 @@ function BookedSlots() {
 
   return (
     <div>
-         <section className="relative block h-[50vh]">
+      <section className="relative block h-[50vh]">
         <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://media.istockphoto.com/id/1217377601/photo/concrete-floor-and-smoke-background.webp?b=1&s=170667a&w=0&k=20&c=ajtSlLyL-T2cFmBQWzbfvw-E25hfFCLt-aFnRlKOWvY=')] bg-cover bg-center" />
           <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
       </section>
@@ -29,18 +29,18 @@ function BookedSlots() {
           <div className="relative mb-6 -mt-64 flex w-full min-w-0 break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
             <Sidebar />
             {/* change */}
-            <div className="p-8">
-      <h2 className="text-3xl font-bold mb-4">Booked Slots</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Turf Name
-              </th>
+            <div className="p-8 w-full">
+              <h2 className="text-3xl font-bold mb-4">Booked Slots</h2>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-green-700">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        ID
+                      </th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Turf Name
+                      </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Date
               </th>

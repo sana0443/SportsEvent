@@ -206,9 +206,9 @@ const slotExists = (startTime, endTime) => {
           <div className="relative mb-6 -mt-64 flex w-full min-w-0 break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
             <Sidebar />
             {/* change */}
-            <div className='flex flex-col lg:ml-60 pt-6'>
+            <div className='flex flex-col items-center w-full pt-6'>
             <h2 className="text-2xl text-center font-bold mb-4">Create Slot</h2>
-            <form onSubmit={handleSubmit} className="w-96 bg-white rounded-lg shadow-md p-4">
+            <form onSubmit={handleSubmit} className="w-full lg:w-1/3  bg-white rounded-lg shadow-md p-4">
               <div className="mb-4">
     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="turf">
       Turf:

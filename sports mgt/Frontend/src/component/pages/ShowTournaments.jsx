@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@material-tailwind/react";
-import TournamnetMdl from '../Modal/TournamnetMdl';
+
 import { format } from 'date-fns';
 import BaseUrl from '../../BaseUrl';
+import { Link } from 'react-router-dom';
 
 function ShowTournaments() {
   const [tournaments, setTournaments] = useState([]);
@@ -94,13 +95,9 @@ function ShowTournaments() {
                   ) : (
                     <p className="text-green-500">{tournament.available_slots} Slots Remaining</p>
                   )}
-                  <Button
-                    color="blue"
-                    size="regular"
-                    onClick={() => openModal(tournament)}
-                  >
-                    View the details
-                  </Button>
+                <Link to={`/tournamentdetails/${tournament.id}`} className="text-blue-500 font-semibold underline">
+              View the details
+            </Link>
                  
                 </div>
               ))}

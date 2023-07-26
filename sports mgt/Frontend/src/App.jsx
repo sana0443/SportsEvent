@@ -13,7 +13,7 @@ import AdminLogin from './Admin/AdminLogin';
 import Footer from './component/Footer/Footer';
 import Sidebar from './Admin/Sidebar';
 import ShowTournaments from './component/pages/ShowTournaments';
-import TournamnetMdl from './component/Modal/TournamnetMdl';
+
 import RegistrationForm from './component/pages/Registration';
 // import SlotList from './component/pages/Slots';
 import { Toaster } from "react-hot-toast";
@@ -32,6 +32,8 @@ import CreateSlotForm from './Admin/create_slot';
 import BookedSlots from './Admin/BookedSlots';
 import Slots_list from './Admin/Slots_list';
 import Edit_slot from './Admin/Edit_slot';
+
+import TournamentDetailsPage from './component/pages/Tournament_datails';
 // import UserProtectedRoute from './Context/userProtectedRoute';
 
 // import Slots from './component/pages/Slots';
@@ -59,10 +61,11 @@ function App() {
             <Route path='/Sidebar' element={<Sidebar />} />
 
             <Route path='/ShowTournaments' element={<ShowTournaments />}/>
+            <Route path='/tournamentdetails/:tournamentId' element={<TournamentDetailsPage />}/>
 
             {/* <Route path='/ShowTournaments' element={<UserProtectedRoute><ShowTournaments /></UserProtectedRoute>} /> */}
           {/* <Route path='/ShowTournaments' element={<userProtectedRoute><ShowTournaments /></userProtectedRoute>} /> */}
-            <Route path='/trmntMdl'element={<TournamnetMdl/>}/>
+         
             <Route path="/registration/:tournamentId" element={<RegistrationForm/>} />
             {/* <Route path='/slots' element={<SlotList/>}/> */}
             <Route path='/profile' element={<Profile/>}/>

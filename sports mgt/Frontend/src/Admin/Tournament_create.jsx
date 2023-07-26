@@ -16,6 +16,7 @@ const TournamentCreationForm = () => {
     registration_open: false,
     registration_deadline:null,
     available_slots: 0,
+    image:''
   });
 
   const [disabledDates, setDisabledDates] = useState([]);
@@ -27,7 +28,7 @@ const TournamentCreationForm = () => {
 
   const fetchDisabledDates = () => {
     axios
-      .get(BaseUrl+'Tournament/dates/')
+      .get(BaseUrl+'/Tournament/dates/')
       .then((response) => {
         setDisabledDates(response.data);
       })
@@ -99,7 +100,7 @@ const TournamentCreationForm = () => {
     e.preventDefault();
     console.log(eventData);
     axios
-      .post(BaseUrl+'Tournament/create/', eventData)
+      .post(BaseUrl+'/Tournament/create/', eventData)
       .then((response) => {
         console.log(response.data);
         viewDetails(response.data);
@@ -129,7 +130,8 @@ const TournamentCreationForm = () => {
             <div className="max-w-5xl lg:w-1/2 sm:w-full mx-auto bg-white p-6 rounded-lg shadow">
       <h1 className="text-2xl text-center font-semibold mb-4">Create Tournament</h1>
       <form onSubmit={handleSubmit}>
-        <div className='flex justify-evenly'>
+      <div className="flex justify-evenly">
+        
           <div className="mb-4 w-5/12">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="event_name">
               Event Name
@@ -158,7 +160,11 @@ const TournamentCreationForm = () => {
               required
             />
           </div>
+          
+          
         </div>
+        
+        
         <div className='flex justify-evenly'>
         <div className="mb-4 w-5/12">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
@@ -202,7 +208,7 @@ const TournamentCreationForm = () => {
               />
 
           </div>
-          <div className="mb-4 5/12">
+          <div className="mb-4 w-3/12">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="available_slots">
               Available Slots
             </label>
@@ -216,6 +222,20 @@ const TournamentCreationForm = () => {
               required
             />
           </div>
+          <div className="mb-4 w-3/12 pl-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+            Tournament Image
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
 
           {eventData.registration_open && (
