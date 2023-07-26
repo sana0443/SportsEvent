@@ -16,7 +16,7 @@ const TournamentCreationForm = () => {
     registration_open: false,
     registration_deadline:null,
     available_slots: 0,
-    image:''
+    image:null
   });
 
   const [disabledDates, setDisabledDates] = useState([]);
@@ -68,39 +68,56 @@ const TournamentCreationForm = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
-
+    const { name, value, type, checked, files } = e.target;
+    const newValue = type === 'checkbox' ? checked : type === 'file' ? files[0] : value;
+  
     setEventData((prevData) => ({
       ...prevData,
       [name]: newValue,
     }));
   };
+    
 
   const handleDateChange = (date, dateString) => {
-    const formattedDates = disabledDates.map((date) =>
-      moment(date).format('YYYY-MM-DD')
-    );
-    
+    const formattedDates = disabledDates.map((date) => moment(date).format('YYYY-MM-DD'));
+
     if (formattedDates.includes(dateString)) {
       console.log('Selected date is disabled.');
       return;
     }
-  
+
     const fieldName = eventData.registration_open ? 'registration_deadline' : 'date';
-  
+
     setEventData((prevData) => ({
       ...prevData,
-      [fieldName]: dateString,
+      [fieldName]: moment(date).format('YYYY-MM-DD'), // Format the date before updating
+    }));
+  };
+
+  const handleRegistrationDeadlineChange = (date, dateString) => {
+    const formattedDates = disabledDeadlineDates.map((date) => moment(date).format('YYYY-MM-DD'));
+
+    if (formattedDates.includes(dateString)) {
+      console.log('Selected date is disabled.');
+      return;
+    }
+
+    setEventData((prevData) => ({
+      ...prevData,
+      registration_deadline: moment(date).format('YYYY-MM-DD'), // Format the date before updating
     }));
   };
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    for (const key in eventData) {
+      formData.append(key, eventData[key]);
+    }
     console.log(eventData);
     axios
-      .post(BaseUrl+'/Tournament/create/', eventData)
+      .post(BaseUrl+'/Tournament/create/', formData)
       .then((response) => {
         console.log(response.data);
         viewDetails(response.data);
@@ -129,9 +146,22 @@ const TournamentCreationForm = () => {
             {/* change */}
             <div className="max-w-5xl lg:w-1/2 sm:w-full mx-auto bg-white p-6 rounded-lg shadow">
       <h1 className="text-2xl text-center font-semibold mb-4">Create Tournament</h1>
-      <form onSubmit={handleSubmit}>
-      <div className="flex justify-evenly">
-        
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="flex justify-evenly">
+        <div className="mb-4 w-5/12">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+            Tournament Image
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            required
+          />
+        </div>
           <div className="mb-4 w-5/12">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="event_name">
               Event Name
@@ -160,7 +190,6 @@ const TournamentCreationForm = () => {
               required
             />
           </div>
-          
           
         </div>
         
@@ -208,7 +237,7 @@ const TournamentCreationForm = () => {
               />
 
           </div>
-          <div className="mb-4 w-3/12">
+          <div className="mb-4 5/12">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="available_slots">
               Available Slots
             </label>
@@ -222,20 +251,6 @@ const TournamentCreationForm = () => {
               required
             />
           </div>
-          <div className="mb-4 w-3/12 pl-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
-            Tournament Image
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="image"
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-            required
-          />
-        </div>
 
 
           {eventData.registration_open && (
@@ -245,7 +260,7 @@ const TournamentCreationForm = () => {
             </label>
             <DatePicker
             disabledDate={disabledDeadlineDate}
-            onChange={handleDateChange}
+            onChange={ handleRegistrationDeadlineChange}
               value={eventData.registration_deadline ? moment(eventData.registration_deadline, 'YYYY-MM-DD') : null}
             />
 
