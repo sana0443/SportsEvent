@@ -79,35 +79,40 @@ const TournamentCreationForm = () => {
     
 
   const handleDateChange = (date, dateString) => {
-    const formattedDates = disabledDates.map((date) => moment(date).format('YYYY-MM-DD'));
-
+    const formattedDates = disabledDates.map((date) =>
+      moment(date).format('YYYY-MM-DD')
+    );
+  
     if (formattedDates.includes(dateString)) {
       console.log('Selected date is disabled.');
       return;
     }
-
+  
     const fieldName = eventData.registration_open ? 'registration_deadline' : 'date';
-
+  
+    // Include the time part in the formatted date
     setEventData((prevData) => ({
       ...prevData,
-      [fieldName]: moment(date).format('YYYY-MM-DD'), // Format the date before updating
-    }));
-  };
-
-  const handleRegistrationDeadlineChange = (date, dateString) => {
-    const formattedDates = disabledDeadlineDates.map((date) => moment(date).format('YYYY-MM-DD'));
-
-    if (formattedDates.includes(dateString)) {
-      console.log('Selected date is disabled.');
-      return;
-    }
-
-    setEventData((prevData) => ({
-      ...prevData,
-      registration_deadline: moment(date).format('YYYY-MM-DD'), // Format the date before updating
+      [fieldName]: moment(date).format('YYYY-MM-DDTHH:mm:ss'),
     }));
   };
   
+  const handleRegistrationDeadlineChange = (date, dateString) => {
+    const formattedDates = disabledDeadlineDates.map((date) =>
+      moment(date).format('YYYY-MM-DD')
+    );
+  
+    if (formattedDates.includes(dateString)) {
+      console.log('Selected date is disabled.');
+      return;
+    }
+  
+    // Include the time part in the formatted date
+    setEventData((prevData) => ({
+      ...prevData,
+      registration_deadline: moment(date).format('YYYY-MM-DDTHH:mm:ss'),
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,6 +120,7 @@ const TournamentCreationForm = () => {
     for (const key in eventData) {
       formData.append(key, eventData[key]);
     }
+    console.log('FormData:', formData);
     console.log(eventData);
     axios
       .post(BaseUrl+'/Tournament/create/', formData)
@@ -260,7 +266,7 @@ const TournamentCreationForm = () => {
             </label>
             <DatePicker
             disabledDate={disabledDeadlineDate}
-            onChange={ handleRegistrationDeadlineChange}
+            onChange={handleRegistrationDeadlineChange}
               value={eventData.registration_deadline ? moment(eventData.registration_deadline, 'YYYY-MM-DD') : null}
             />
 
