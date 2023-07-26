@@ -77,7 +77,7 @@ function ShowTournaments() {
 
   return (
     <>
-      <TournamnetMdl isVisible={modal} onClose={closeModal} tournament={selectedTournament} />
+      
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 relative" style={{ backgroundImage, backgroundSize: 'cover' }}>
         <div className="py-8">

@@ -73,13 +73,12 @@ function AdminSidebar() {
              absolute -right-3 top-9 border-2 border-dark-purple cursor-pointer duration-1000 ${ !open && "rotate-180" } `} onClick={() => setOpen(!open)}/>
             
             <div className=' inline-flex'>
-            <img
-                src="/img/logo.png" // Replace 'path/to/your/image.png' with the actual image URL or path
-                alt="FitZone Logo"
+            <div
+               
                 className={`bg-amber-300 rounded cursor-pointer block float-left mr-2 duration-500 ${open && "rotate-[360deg]"}`}
                 style={{ width: '40px', height: '40px' }} // You can adjust the width and height as needed
             />
-                <h1 className={` text-white origin-left pl-5 font-medium text-2xl duration-300 ${!open && "scale-0"} `}>FitZone</h1>
+                <h1 className={` text-white origin-left pl-5 font-medium text-2xl duration-300 ${!open && "scale-0"} `}>GolFit</h1>
             </div>
 
             <div className={`flex items-center rounded-md bg-light-white mt-6 ${!open ? "px-2.5" : "px-4" } py-2`} >

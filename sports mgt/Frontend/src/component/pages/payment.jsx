@@ -133,7 +133,7 @@ function Payment() {
       </div>
       <div className="mb-4">
         <span className="font-bold">Date:Time: </span>
-        <span>{formattedDate}</span>
+        <span>{date}</span>
       </div>
       <div className="mb-4">
         <span className="font-bold">Price: </span>
