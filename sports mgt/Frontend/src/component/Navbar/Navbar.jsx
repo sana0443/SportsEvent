@@ -36,6 +36,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem('loginstatus')
       Cookies.remove('access_token')
       dispatch(userLogout());
       // setIsLoggedIn(false);

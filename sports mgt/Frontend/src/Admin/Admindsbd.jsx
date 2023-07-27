@@ -8,6 +8,38 @@ import BaseUrl from '../BaseUrl';
 const AdminDashboard = () => {
   const [revenueData, setRevenueData] = useState([]);
 
+
+
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalTournaments, setTotalTournaments] = useState(0);
+
+  useEffect(() => {
+    axios.get(BaseUrl + '/AdminSide/bookedSlots/')
+      .then((response) => {
+        setRevenueData(response.data);
+        console.log(response.data, '----------');
+      })
+      .catch((error) => {
+        console.error('Failed to fetch booked slots:', error);
+      });
+
+    axios.get(BaseUrl + '/AdminSide/totalUsers/')
+      .then((response) => {
+        setTotalUsers(response.data.totalUsers);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch total users:', error);
+      });
+
+    axios.get(BaseUrl + '/AdminSide/totalTournaments/')
+      .then((response) => {
+        setTotalTournaments(response.data.totalTournaments);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch total tournaments:', error);
+      });
+  }, []);
+
   useEffect(() => {
     axios.get(BaseUrl+'/AdminSide/bookedSlots/')
       .then((response) => {
@@ -82,12 +114,12 @@ const AdminDashboard = () => {
         {/* Total Users */}
         <div className="w-1/2">
           <h2 className="text-xl font-semibold mb-2">Total Users</h2>
-          <p className="text-gray-600">100</p>
+          <p className="text-gray-600">{totalUsers}</p>
         </div>
         {/* Total Tournaments */}
         <div className="w-1/2">
           <h2 className="text-xl font-semibold mb-2">Total Tournaments</h2>
-          <p className="text-gray-600">12</p>
+          <p className="text-gray-600">{totalTournaments}</p>
         </div>
       </div>
     </div>

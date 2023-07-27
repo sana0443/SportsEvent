@@ -148,3 +148,14 @@ class GetBookedSlotsAPIView(APIView):
         bookings = Booking.objects.all()
         serializer = BookingSerializer(bookings, many=True)
         return Response(serializer.data)
+    
+
+class TotalUsersView(APIView):
+    def get(self, request):
+        total_users = signup.objects.count()
+        return Response({'totalUsers': total_users})
+
+class TotalTournamentsView(APIView):
+    def get(self, request):
+        total_tournaments = Tournament_ancmt.objects.count()
+        return Response({'totalTournaments': total_tournaments})

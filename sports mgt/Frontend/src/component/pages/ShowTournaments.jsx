@@ -89,12 +89,12 @@ function ShowTournaments() {
                   <h3 className="text-xl font-bold mb-2">{tournament.title}</h3>
                   <p className="text-gray-700 mb-2">{tournament.event_name}</p>
                   <p className="text-gray-700 mb-2">{format(new Date(tournament.date), 'MMMM d')}</p>
-                  <p className="text-gray-700 mb-2">Available Slots: {tournament.available_slots}</p>
-                  {tournament.available_slots === 0 ? (
+                  {/* <p className="text-gray-700 mb-2">Available Slots: {tournament.available_slots}</p> */}
+                  {/* {tournament.available_slots === 0 ? (
                     <p className="text-red-500">Booking Filled</p>
                   ) : (
                     <p className="text-green-500">{tournament.available_slots} Slots Remaining</p>
-                  )}
+                  )} */}
                 <Link to={`/tournamentdetails/${tournament.id}`} className="text-blue-500 font-semibold underline">
               View the details
             </Link>

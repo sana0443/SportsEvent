@@ -34,7 +34,8 @@ import Slots_list from './Admin/Slots_list';
 import Edit_slot from './Admin/Edit_slot';
 
 import TournamentDetailsPage from './component/pages/Tournament_datails';
-// import UserProtectedRoute from './Context/userProtectedRoute';
+import UserProtectedRoute from './Context/UserProtectedRoute';
+import RequireAuth from './Context/RequireAuth';
 
 // import Slots from './component/pages/Slots';
 // import SlotCard from './component/SlotsCard';
@@ -60,10 +61,10 @@ function App() {
             <Route path='/tournaments' element={<TournamentList />} />
             <Route path='/Sidebar' element={<Sidebar />} />
 
-            <Route path='/ShowTournaments' element={<ShowTournaments />}/>
+           
             <Route path='/tournamentdetails/:tournamentId' element={<TournamentDetailsPage />}/>
 
-            {/* <Route path='/ShowTournaments' element={<UserProtectedRoute><ShowTournaments /></UserProtectedRoute>} /> */}
+            <Route path='/ShowTournaments' element={<RequireAuth><ShowTournaments /></RequireAuth>} />
           {/* <Route path='/ShowTournaments' element={<userProtectedRoute><ShowTournaments /></userProtectedRoute>} /> */}
          
             <Route path="/registration/:tournamentId" element={<RegistrationForm/>} />
@@ -73,7 +74,7 @@ function App() {
             <Route path='/teamdetails/:teamId' element={<TeamDetails/>}/>
             <Route path='/about' element={<About/>}/>
             <Route path='/turfs' element={<TurfList/>}/>
-            <Route path='/booking' element={<Booking/>}/>
+            <Route path='/booking' element={<RequireAuth><Booking/></RequireAuth>}/>
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/success' element={<PaymentSuccess/>}/>
             <Route path='/details' element={<TurfDetail/>}/>

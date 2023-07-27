@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path
-from .views import  TournamentDeleteView,CreateSlotAPIView,GetBookedSlotsAPIView,ExistingSlotsView,AllSlotListView,SlotDeleteView,SlotDetailView
+from .views import  TournamentDeleteView,CreateSlotAPIView,GetBookedSlotsAPIView,ExistingSlotsView,AllSlotListView,SlotDeleteView,SlotDetailView,TotalUsersView,TotalTournamentsView
 
 
 urlpatterns = [
@@ -16,5 +16,7 @@ path('allslots/', AllSlotListView.as_view(), name='slots-list'),
 path('bookedSlots/',GetBookedSlotsAPIView.as_view()),
 path('existingSlots/', ExistingSlotsView.as_view(), name='get_existing_slots'),
 path('slot/<int:id>/', SlotDetailView.as_view(), name='slot-detail'),
+path('totalUsers/', TotalUsersView.as_view(), name='total-users'),
+path('totalTournaments/', TotalTournamentsView.as_view(), name='total-tournaments'),
 
 ]

@@ -88,12 +88,9 @@ const TournamentCreationForm = () => {
       return;
     }
   
-    const fieldName = eventData.registration_open ? 'registration_deadline' : 'date';
-  
-    // Include the time part in the formatted date
     setEventData((prevData) => ({
       ...prevData,
-      [fieldName]: moment(date).format('YYYY-MM-DDTHH:mm:ss'),
+      date: date.isValid() ? date.format('YYYY-MM-DDTHH:mm:ss') : null,
     }));
   };
   
@@ -107,12 +104,15 @@ const TournamentCreationForm = () => {
       return;
     }
   
-    // Include the time part in the formatted date
     setEventData((prevData) => ({
       ...prevData,
-      registration_deadline: moment(date).format('YYYY-MM-DDTHH:mm:ss'),
+      registration_deadline: dateString, // Store the date string directly
     }));
   };
+  
+  
+  
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -235,12 +235,15 @@ const TournamentCreationForm = () => {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
                 Date
             </label>
-              <DatePicker
-                disabledDate={disabledDate}
-                onChange={handleDateChange}
-                value={eventData.date ?moment(eventData.date, 'YYYY-MM-DD') : null}
-                
-              />
+            <DatePicker
+  disabledDate={disabledDate}
+  onChange={handleDateChange}
+  value={eventData.date ? moment(eventData.date) : null}
+/>
+
+
+
+
 
           </div>
           <div className="mb-4 5/12">
@@ -267,7 +270,7 @@ const TournamentCreationForm = () => {
             <DatePicker
             disabledDate={disabledDeadlineDate}
             onChange={handleRegistrationDeadlineChange}
-              value={eventData.registration_deadline ? moment(eventData.registration_deadline, 'YYYY-MM-DD') : null}
+              value={eventData.registration_deadline?  moment(eventData.registration_deadline) : null}
             />
 
           </div>

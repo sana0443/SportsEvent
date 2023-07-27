@@ -138,6 +138,7 @@ class UserLogin(APIView):
             'email': user.email,
             'phone_number': user.phone_number,
             'age': user.age,
+            'loginstatus' : True
         })
 
 

@@ -62,6 +62,7 @@ const Login = () => {
       console.log('axios return data--------------------',data);
       Cookies.set('access-token', data.access_token);
       Cookies.set('refresh-token', data.refresh_token);
+      localStorage.setItem('loginstatus',data.loginstatus)
 
 
       localStorage.setItem("token", data.id)
