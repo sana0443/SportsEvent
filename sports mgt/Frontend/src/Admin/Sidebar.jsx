@@ -81,10 +81,10 @@ function AdminSidebar() {
                 <h1 className={` text-white origin-left pl-5 font-medium text-2xl duration-300 ${!open && "scale-0"} `}>GolFit</h1>
             </div>
 
-            <div className={`flex items-center rounded-md bg-light-white mt-6 ${!open ? "px-2.5" : "px-4" } py-2`} >
+            {/* <div className={`flex items-center rounded-md bg-light-white mt-6 ${!open ? "px-2.5" : "px-4" } py-2`} >
                 <BsSearch className={` text-white text-lg block float-left cursor-pointer ${open && "mr-2"} `}/>
                 <input type="search" placeholder='search' className={`text-base bg-transparent w-full text-white focus:outline-none ${!open && "hidden"} `}  />
-            </div>
+            </div> */}
 
             <ul className='pt-2'>
                 { Menus.map((menu, index) => (

@@ -68,7 +68,6 @@ function Turfs() {
       console.log(error);
     }
   };
-  const backgroundImage = 'url("https://www.monaco.edu/app/uploads/sites/4/2021/07/Sports_Management.jpg")';
 
 
   return (
@@ -76,6 +75,8 @@ function Turfs() {
       {modal?<TurfMdl  onClose={closeModal} slot={slots} turfId={selectedTurfId} details={setSlots} bookedSlots={bookedSlots} />:null}
       <section className="relative block h-[50vh]">
         <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://cdn.wallpapersafari.com/92/33/RBQfUk.jpg')] bg-cover bg-center" />
+        <h2 className="text-3xl font-bold text-white text-center absolute inset-x-0 top-36 transform -translate-y-1/2">Available Turfs</h2>
+
           <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
       </section>
       <section className="relative bg-blue-gray-50/50 py-16 px-4">

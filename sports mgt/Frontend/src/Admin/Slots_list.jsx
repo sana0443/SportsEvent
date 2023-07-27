@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, Pagination, Input } from 'antd'; // Import Pagination and Input components
+import { List } from 'antd'; // Import List component
 import Sidebar from './Sidebar';
 import moment from 'moment';
-import { toast, Toaster } from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BaseUrl from '../BaseUrl';
 
 const SlotsList = () => {
@@ -12,30 +12,38 @@ const SlotsList = () => {
   const [slots, setSlots] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [startTime, setStartTime]=useState('');
+  const [endTime, setEndTime]=useState('');
+
+  const location = useLocation();
 
   useEffect(() => {
+    // Access the updated start time and end time from the location state
+    const { startTime, endTime } = location.state || {};
+    if (startTime && endTime) {
+      // Set the initial start time and end time in the state
+      setStartTime(startTime);
+      setEndTime(endTime);
+    }
+
+    // Fetch slots whenever the currentPage or searchTerm changes
     fetchSlots();
-  }, [currentPage]); // Fetch slots whenever the currentPage changes
+  }, [currentPage, searchTerm, location.state]); 
 
   const fetchSlots = async () => {
     try {
       const response = await axios.get(BaseUrl + '/AdminSide/allslots/', {
         params: {
           page: currentPage, // Send the current page number as a query parameter
-          search: searchTerm // Send the search term as a query parameter
-        }
+          search: searchTerm, // Send the search term as a query parameter
+        },
       });
       // Ensure the API response is an array of objects
-      console.log(response.data,"ttttttttttttttttttttttttt");
+      console.log(response.data, 'ttttttttttttttttttttttttt');
       setSlots(response.data); // Assuming the API response contains a property called "slots"
     } catch (error) {
       console.error('Error fetching slots:', error);
     }
-  };
-
-  const handleEditSlot = (slotId) => {
-    navigate (`/editslot/${slotId}`);
-    console.log(`Edit slot with ID ${slotId}`);
   };
 
   const handleDeleteSlot = async (slotId) => {
@@ -55,6 +63,12 @@ const SlotsList = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+  
+
+  const handleEditSlot = (slotId) => {
+    navigate (`/editslot/${slotId}`);
+    console.log(`Edit slot with ID ${slotId}`);
   };
 
   
@@ -87,7 +101,7 @@ const SlotsList = () => {
               ? moment(slotItem.start_time).format('HH:mm')
               : '-'}{' '}
             - {slotItem.end_time
-              ? moment(slotItem.end_time).format('HH:mm')
+              ? moment(slotItem.start_time).format('HH:mm')
               : '-'}{' '}
           </p>
           <p className="text-sm text-gray-500">Turf: {slotItem.turf.name}</p>

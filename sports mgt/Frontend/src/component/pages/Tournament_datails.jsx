@@ -57,12 +57,17 @@ function TournamentDetailsPage() {
 
         {/* Extra comments or terms and conditions */}
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-2">Terms and Conditions:</h2>
-          <p className="text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur eget libero nec venenatis. 
-            Vestibulum vel fermentum dolor, vel accumsan neque. Praesent eget ex at arcu consectetur pellentesque. 
-            Fusce pharetra ex eu odio consectetur, eget pellentesque tortor ullamcorper.
-          </p>
+          <h2 className="text-xl font-semibold mb-2">Instructions:</h2>
+          <h5>Participants must bring their own sports equipment.<br/>Participants must bring their own sports equipment.
+          <br/>Check-in time is 30 minutes before the tournament starts.<br/>Players are required to wear proper sports attire.
+          <br/>Matches will be played in a best-of-three format.  <br/>No substitutions allowed after the tournament begins.
+          <br/>Players must adhere to fair play and sportsmanship.
+          </h5>
+        
+
+        
+       
+         
         </div>
 
       </div>

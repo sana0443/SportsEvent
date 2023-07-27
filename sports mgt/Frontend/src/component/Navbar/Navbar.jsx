@@ -46,7 +46,10 @@ const Navbar = () => {
       console.log(error);
     }
   };
-  const userProfileUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80';
+  const defaultimg = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80';
+
+  const userProfileUrl = localStorage.getItem("userProfileImage") || defaultimg;
+  console.log(userProfileUrl);
 
   return (
     <Disclosure as="nav" className="absolute top-0 left-0 w-full z-10 bg-transparent">

@@ -61,8 +61,13 @@ function ProfileUpdateMdl({ isVisible, onClose, profilee, onProfileUpdate }) {
 
       console.log('Profile updated successfully:', response.data);
       onProfileUpdate();
+      console.log(response.data);
       onClose();
       toast.success('Profile Updated Successfully');
+        // if (response.data.photo) {
+        //   localStorage.setItem('userProfileImage', response.data.photo);
+        //   console.log(response.data.photo,user);
+        // }
     } catch (error) {
       console.error('Error updating profile:', error);
     }

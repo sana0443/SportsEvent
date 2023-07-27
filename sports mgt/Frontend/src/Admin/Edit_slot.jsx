@@ -90,7 +90,9 @@ function Edit_slot() {
       .then((response) => {
         console.log('Slot updated successfully:', response.data);
         toast.success('updated successfully')
-        navigate('/slotz')
+        navigate('/slotz',{
+        
+        })
       })
       .catch((error) => {
         console.error('Error updating slot:', error);

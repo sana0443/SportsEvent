@@ -63,23 +63,24 @@ const UserList = () => {
       console.error('Invalid userId');
       return;
     }
-
+  
     axios
-      .post(BaseUrl+"/AdminSide/userBlock/", {
+      .post(BaseUrl + "/AdminSide/userBlock/", {
         email: email
       })
       .then((response) => {
-        console.log(response.data,'-------------------');
-      })
-      .then((data) => {
-        console.log('User unblocked:', data);
-        toast.success('Successfully unblocked');
+        console.log(response.data, '-------------------');
+       
+        toast.success(response.data.message); 
         fetchUserList();
       })
       .catch((error) => {
         console.error('Error unblocking user:', error);
+        // Display the error message as a toast
+        toast.error("Error unblocking user.");
       });
   };
+  
 
   const renderUsers = () => {
     const startIndex = (currentPage - 1) * perPage;

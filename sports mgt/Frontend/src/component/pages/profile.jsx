@@ -265,11 +265,28 @@ export function Profile() {
                   day: "numeric",
                 });
 
+                const endTime = new Date(slot.end_time);
+                const endTimeInHoursMinutes = endTime.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true,
+                });
+
+                const startTime = new Date(slot.start_time);
+                const startTimeInHoursMinutes = startTime.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true,
+                });
+                
+
                 return (
                   <div key={slot.id} className="p-4 border rounded-lg shadow-lg">
                     <p className="text-lg font-semibold">Slot ID: {slot.id}</p>
-                    <p className="text-lg font-semibold">Start Time: {formattedDate}</p>
-                    <p className="text-lg font-semibold">End Time: {slot.end_time}</p>
+                    <p className="text-lg font-semibold">Date: {formattedDate}</p>
+                    <p className="text-lg font-semibold">Start Time: {startTimeInHoursMinutes}</p>
+
+                    <p className="text-lg font-semibold">End Time: {endTimeInHoursMinutes}</p>
                     <p className="text-lg font-semibold">Price: {slot.price}</p>
                    
                   </div>

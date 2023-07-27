@@ -19,6 +19,7 @@ const TournamentEditForm = () => {
   const [registration_deadline, setRegistration_deadline] = useState(null);
   const [available_slots, setAvailable_slots] = useState(0);
   const [description, setDescription] = useState('');
+  const [image,setImage]=useState(null)
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -45,6 +46,9 @@ const TournamentEditForm = () => {
       setRegistration_deadline(parsedData.registration_deadline);
       setAvailable_slots(parsedData.available_slots);
       setDescription(parsedData.description);
+      setImage(parsedData.image);
+      
+      
     }
   }, []);
 
@@ -59,6 +63,7 @@ const TournamentEditForm = () => {
       registration_deadline,
       available_slots,
       description,
+      image
     };
     localStorage.setItem('tournamentFormData', JSON.stringify(formData));
   }, [
@@ -70,7 +75,17 @@ const TournamentEditForm = () => {
     registration_deadline,
     available_slots,
     description,
+    image
   ]);
+
+
+
+  // const handleImage=(e)=>{
+  //   const file=e.target.files[0];
+    
+
+
+  // }
 
   const fetchTournament = async () => {
     try {
@@ -85,6 +100,7 @@ const TournamentEditForm = () => {
       setRegistration_deadline(tournamentData.registration_deadline || null);
       setAvailable_slots(tournamentData.available_slots || 0);
       setDescription(tournamentData.description || '');
+      setImage(tournamentData.image || null)
     } catch (error) {
       console.error(error);
     }
@@ -130,6 +146,10 @@ const TournamentEditForm = () => {
       case 'title':
         setTitle(newValue);
         break;
+        case 'image':
+          const selectedImage = e.target.files[0];
+          setImage(selectedImage);
+          break;
       case 'date':
         setDate(newValue);
         break;
@@ -181,9 +201,16 @@ const TournamentEditForm = () => {
           registration_deadline,
           available_slots,
           description,
+          image
         };
+        console.log(updatedData)
+        const formData = new FormData();
+        for (const key in updatedData) {
+          formData.append(key, updatedData[key]);
+        }
+        console.log(formData,'this form data--------');
     axios
-      .put(BaseUrl+`/Tournament/Tournament/detail/${id}/`, updatedData)
+      .put(BaseUrl+`/Tournament/Tournament/detail/${id}/`, formData)
       .then((response) => {
         console.log(response.data);
         toast.success('Successfully edited')
@@ -208,7 +235,7 @@ const TournamentEditForm = () => {
 
 <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow">
   <h1 className="text-2xl font-semibold mb-4">Edit Tournament</h1>
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} enctype="multipart/form-data">
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="event_name">
         Event Name
@@ -238,6 +265,20 @@ const TournamentEditForm = () => {
         required
       />
     </div>
+    <div className="mb-4 ">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+            Tournament Image
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={(e)=>setImage(e.target.files[0])}
+            required
+          />
+        </div>
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
         Date
