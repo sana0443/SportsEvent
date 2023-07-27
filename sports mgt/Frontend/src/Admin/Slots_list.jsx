@@ -101,7 +101,7 @@ const SlotsList = () => {
               ? moment(slotItem.start_time).format('HH:mm')
               : '-'}{' '}
             - {slotItem.end_time
-              ? moment(slotItem.start_time).format('HH:mm')
+              ? moment(slotItem.end_time).format('HH:mm')
               : '-'}{' '}
           </p>
           <p className="text-sm text-gray-500">Turf: {slotItem.turf.name}</p>
