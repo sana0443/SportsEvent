@@ -14,7 +14,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os.path
+import environ
 # from decouple import config
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +35,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%&1h=f!=_oaxx2)qph8jx&i$jp=47)+(fox6&3a3+%f(or2r_^'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -175,9 +179,8 @@ REST_FRAMEWORK = {
 
 
 
-TWILIO_ACCOUNT_SID ='ACe6b87fefb94c31793fd8b263ac595c8d'
-TWILIO_AUTH_TOKEN = '8fa4411f855435e07c2780bd74c90d48'
-TWILIO_SERVICE_SID = 'MG8eaed04d4058b84d3be7e0f8cd914990'
+RZ_SECRET_KEY=env('RZ_SECRET_KEY')
+PUBLIC_KEY=env('PUBLIC_KEY')
 
 TWILIO_DEBUG = True
 

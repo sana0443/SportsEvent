@@ -116,7 +116,7 @@ def Start_payment(request,turf_id):
     print(turf_id,'--------0-------------')
 
 
-    client = razorpay.Client(auth=("rzp_test_k6Ms2BWCn74AHT", "aZeXrea3AybLuVTSGEcemHGv"))
+    client = razorpay.Client(auth=(settings.PUBLIC_KEY, settings.SECRET_KEY))
 
     print('****')
 
