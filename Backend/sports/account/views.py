@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from . serializers import Signupserializer
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth import get_user_model
     
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -145,26 +146,23 @@ class UserLogin(APIView):
             
 
         
+User = get_user_model()
 
 class AdminLoginView(APIView):
     def post(self, request):
-        email = request.data["email"]
-        password = request.data["password"]
-        print("Received from React", email, password)
+        username = request.data.get("username")
+        password = request.data.get("password")
 
         try:
-            user = User.objects.get(email=email)
-            print("admin is here")
+            user = User.objects.get(username=username)
         except User.DoesNotExist:
-            print("not here")
             raise AuthenticationFailed("Account does not exist")
 
-        if user is None:
-            raise AuthenticationFailed("User does not exist")
-        if user.check_password(password):
+        if not user.check_password(password):
             raise AuthenticationFailed("Incorrect Password")
+
         if not user.is_superuser:
-            raise AuthenticationFailed("User is not a superuser")  # Add the condition to check if the user is a superuser
+            raise AuthenticationFailed("User is not a superuser")
 
         access_token = str(AccessToken.for_user(user))
         refresh_token = str(RefreshToken.for_user(user))

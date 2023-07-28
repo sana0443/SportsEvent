@@ -12,24 +12,21 @@ const AdminLogin = () => {
 
   const [error, setError] = useState('');
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  // const validateEmail = (email) => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(email);
+  // };
 
   const validateForm = () => {
-    if (!email || !password) {
+    if (!username || !password) {
       setError('Please fill in all fields');
       return false;
     }
 
-    if (!validateEmail(email)) {
-      setError('Please enter a valid email address');
-      return false;
-    }
+   
 
     return true;
   };
@@ -42,9 +39,10 @@ const AdminLogin = () => {
     }
 
     const user = {
-      email: email,
+     username: username,
       password: password,
     };
+   
 
     try {
       const { data } = await axios.post(BaseUrl+'/account/AdminLogin/', user);
@@ -52,6 +50,7 @@ const AdminLogin = () => {
       console.log('axios return data', data);
       Cookies.set("access-token", data.access_token)
       Cookies.set("refresh-token", data.refresh_token)
+      localStorage.setItem("admin", data.id)
 
       // Handle successful login, e.g., store user data in context or local storage
       navigate('/Admindsbd'); // Redirect to dashboard page after successful login
@@ -64,14 +63,11 @@ const AdminLogin = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-15 mx-auto md:h-screen lg:py-0">
-        {/* <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
-          Flowbite
-        </a> */}
+      
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Login to your account
+            Admin
             </h1>
 
             <div>
@@ -83,17 +79,17 @@ const AdminLogin = () => {
             </div>
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Your email
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Username
                 </label>
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  type="email"
-                  name="email"
-                  id="email"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  type="name"
+                  name="username"
+                  id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="username"
                   required=""
                 />
               </div>
