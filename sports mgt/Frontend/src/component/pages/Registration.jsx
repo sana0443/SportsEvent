@@ -99,8 +99,7 @@ function RegistrationForm() {
         toast.error('Age cannot be negative');
         setPlayerErrors((prevErrors) => ({ ...prevErrors, [index]: true }));
       } else if (age < 21 || age > 35) {
-        // Handle age outside the allowed range
-        // toast.error('Age should be between 21 and 35');
+       
         setPlayerErrors((prevErrors) => ({ ...prevErrors, [index]: true }));
       } else {
         setPlayerErrors((prevErrors) => ({ ...prevErrors, [index]: false }));

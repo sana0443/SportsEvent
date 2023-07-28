@@ -33,16 +33,7 @@ export function Profile() {
           });
           console.log(response.data,'ddddddddddddd');
           setUserData(response.data);
-          // if (response.data.tournament_id) {
-          //   // Fetch tournament data using the tournament_id
-          //   const tournamentResponse = await axios.get(
-          //     `${BaseUrl}tournaments/${response.data.tournament_id}`
-          //   );
-          //   // setTournamentData(tournamentResponse.data);
-          // } else {
-          //   // If the user is not registered for a tournament, set tournamentData to null
-          //   // setTournamentData(null);
-          // }
+       
         } catch (error) {
           console.error("Error fetching user data:", error);
         }

@@ -4,11 +4,12 @@ import { Navigate } from 'react-router-dom';
 const RequireAuth = ({ children,...rest}) => {
   console.log('Inside protected route');
   const loginstatus = localStorage.getItem('loginstatus')
+  const userid=localStorage.getItem('token')
   
 
   return (
     <>
-      {loginstatus ? children : <Navigate to='/login' />}
+      {loginstatus || userid ? children : <Navigate to='/login' />}
     </>
   );
 

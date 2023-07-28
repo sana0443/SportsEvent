@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 function ShowTournaments() {
   const [tournaments, setTournaments] = useState([]);
   const [error, setError] = useState(null);
-  const [modal, setModal] = useState(false);
-  const [selectedTournament, setSelectedTournament] = useState(null);
+
+ 
 
   useEffect(() => {
     fetchTournaments();
@@ -31,43 +31,11 @@ function ShowTournaments() {
     }
   };
 
-  const openModal = (tournament) => {
-    setSelectedTournament(tournament);
-    setModal(true);
-  };
 
-  const closeModal = () => {
-    setModal(false);
-  };
 
-  const handleBooking = async () => {
-    try {
-      // Simulate booking by making an API call to the backend
-      const response = await fetch(BaseUrl + '/Tournament/book/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ tournamentId: selectedTournament.id }),
-      }); 
+ 
 
-      if (response.ok) {
-        // Update the available slots on the frontend after successful booking
-        const updatedTournaments = tournaments.map((tournament) =>
-          tournament.id === selectedTournament.id
-            ? { ...tournament, available_slots: tournament.available_slots - 1 }
-            : tournament
-        );
-        setTournaments(updatedTournaments);
-        closeModal();
-      } else {
-        throw new Error('Booking failed');
-      }
-    } catch (error) {
-      console.error('Booking failed:', error);
-      // Handle booking failure
-    }
-  };
+ 
 
   if (error) {
     return <div>Error: {error}</div>;
