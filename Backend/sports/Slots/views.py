@@ -12,7 +12,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 import razorpay
 from django.conf import settings
 from rest_framework.generics import CreateAPIView
-from django.conf import settings
+
 from django.utils import timezone
 from datetime import datetime
 
@@ -116,7 +116,7 @@ def Start_payment(request,turf_id):
     print(turf_id,'--------0-------------')
 
 
-    client = razorpay.Client(auth=(settings.PUBLIC_KEY, settings.SECRET_KEY))
+    client = razorpay.Client(auth=("rzp_test_k6Ms2BWCn74AHT", "aZeXrea3AybLuVTSGEcemHGv"))
 
     print('****')
 
@@ -212,7 +212,7 @@ def Handle_payment_success(request):
             'razorpay_signature': raz_signature
         }
 
-        client = razorpay.Client(auth=("rzp_test_k6Ms2BWCn74AHT","aZeXrea3AybLuVTSGEcemHGv"))
+        client = razorpay.Client(auth=("rzp_test_k6Ms2BWCn74AHT", "aZeXrea3AybLuVTSGEcemHGv"))
         
         check = client.utility.verify_payment_signature(data)
         print(check)
