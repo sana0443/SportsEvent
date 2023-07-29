@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileUpdateMdl from "../Modal/ProfileUpdateMdl";
 import BaseUrl from "../../BaseUrl";
+import moment from "moment";
+
 
 
 export function Profile() {
@@ -120,6 +122,17 @@ export function Profile() {
   }, []);
 
 
+
+  const adjustTime = (time) => {
+    const adjustedTime = new Date(time);
+    adjustedTime.setHours(adjustedTime.getHours() - 5);
+    adjustedTime.setMinutes(adjustedTime.getMinutes() - 30);
+    return adjustedTime.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+  };
 
 
   
@@ -241,45 +254,22 @@ export function Profile() {
 </div>
 <div className="flex justify-center">
 {bookedSlots.length > 0 && (
-        <div className="mt-10 border-t border-blue-gray-50 py-6 text-center ">
+        <div className="mt-10 border-t border-blue-gray-50 py-6 text-center">
           <div>
-            
             <h2 className="text-2xl font-bold mb-4">Booked Slots</h2>
             <div className="grid md:grid-cols-3 gap-4 justify-center">
               {bookedSlots.map((slot) => {
-                // Convert the start_time to a Date object
-                const bookingDate = new Date(slot.start_time);
-                // Format the bookingDate to display the date in a human-readable format
-                const formattedDate = bookingDate.toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                });
-
-                const endTime = new Date(slot.end_time);
-                const endTimeInHoursMinutes = endTime.toLocaleString('en-US', {
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  hour12: true,
-                });
-
-                const startTime = new Date(slot.start_time);
-                const startTimeInHoursMinutes = startTime.toLocaleString('en-US', {
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  hour12: true,
-                });
-                
+                // Convert the start_time and end_time to human-readable format after adjusting the time
+                const adjustedStartTime = adjustTime(slot.start_time);
+                const adjustedEndTime = adjustTime(slot.end_time);
 
                 return (
                   <div key={slot.id} className="p-4 border rounded-lg shadow-lg">
                     <p className="text-lg font-semibold">Slot ID: {slot.id}</p>
-                    <p className="text-lg font-semibold">Date: {formattedDate}</p>
-                    <p className="text-lg font-semibold">Start Time: {startTimeInHoursMinutes}</p>
-
-                    <p className="text-lg font-semibold">End Time: {endTimeInHoursMinutes}</p>
+                    <p className="text-lg font-semibold">Date: {moment(slot.start_time).format("YYYY-MM-DD")}</p>
+                    <p className="text-lg font-semibold">Start Time: {adjustedStartTime}</p>
+                    <p className="text-lg font-semibold">End Time: {adjustedEndTime}</p>
                     <p className="text-lg font-semibold">Price: {slot.price}</p>
-                   
                   </div>
                 );
               })}

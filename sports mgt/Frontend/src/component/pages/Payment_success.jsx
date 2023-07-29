@@ -57,12 +57,11 @@ function PaymentSuccess() {
 
     storeBookingDetails();
   }, [date, price, slot, turf_id, name, phoneNumber, order_id]);
-  const backgroundImage = 'url("https://i.pinimg.com/originals/3e/45/2b/3e452bcd2b2ae8e84713c79635099173.jpg")';
 
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center"
-        style={{ backgroundImage: backgroundImage, backgroundSize: 'cover' }}>
+       >
       <div className="bg-white rounded-lg shadow-lg p-8">
         <div className="flex items-center justify-center rounded-full bg-green-500 w-16 h-16">
           <i className="text-white text-4xl">✓</i>

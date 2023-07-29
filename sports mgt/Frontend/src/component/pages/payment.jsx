@@ -120,7 +120,10 @@ function Payment() {
       console.log(error);
     }
   };
+  const adjustTime = (time) => moment(time, 'HH:mm').subtract(5, 'hours').subtract(30, 'minutes').format('HH:mm');
   const formattedDate = moment(date).format("YYYY-MM-DD");
+  const formattedStartTime = adjustTime(slot); // Adjusted start time
+  const formattedEndTime = adjustTime(end_time); 
 
   const backgroundImage =
     'url("https://cdn.wallpapersafari.com/67/99/Gm2KlY.jpg")';
@@ -131,17 +134,18 @@ function Payment() {
       className="flex justify-center items-center min-h-screen bg-gray-100"
       style={{ backgroundImage: backgroundImage, backgroundSize: "cover" }}
     >
-      <div key="div1" className="bg-white rounded-lg p-6 shadow-md">
+      <div  className="bg-white rounded-lg p-6 shadow-md">
         <h1 className="text-2xl font-bold mb-4">Summary</h1>
-        <div key="div2"className="mb-4">
+        <div className="mb-4">
           <span className="font-bold">Slot: {turf_id} - </span>
-          <span>{slot}</span>
+          <span>{formattedStartTime}-{formattedEndTime}</span>
         </div>
-        <div key="div3" className="mb-4">
+      
+        <div className="mb-4">
           <span className="font-bold">Date:Time: </span>
-          <span>{date}</span>
+          <span>{ date}</span>
         </div>
-        <div key="div4" className="mb-4">
+        <div  className="mb-4">
           <span className="font-bold">Price: </span>
           <span>{price}</span>
         </div>

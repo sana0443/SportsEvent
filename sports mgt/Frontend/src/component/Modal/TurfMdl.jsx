@@ -83,7 +83,7 @@ function TurfMdl({ onClose, slot, details,turfId ,bookedSlots }) {
     setSelectedPrice(price);
   };
   
-
+const adjustTime = (time) => moment(time).subtract(5, 'hours').subtract(30, 'minutes').format('HH:mm');
 
 
 const filteredSlots = slot.filter((slot) => {
@@ -121,34 +121,42 @@ return (
         <div className="bg-white p-4 rounded-lg overflow-y-auto">
           <DatePicker disabledDate={disabledDate} value={selectedDate} onChange={handleDateChange} />
           {selectedDate && (
-            <ul className="mt-4">
-              {times.map((startTime, index) => (
-                <li
-                  key={startTime}
-                  className={`time-card ${
-                    selectedTime === startTime ? 'selected bg-blue-500 text-white' : 'bg-white text-gray-800'
-                  }`}
-                  onClick={() => !isSlotBooked(startTime) && handleTimeClick(startTime, end[index], prices[index])}
-                  disabled={isSlotBooked(startTime)}
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-semibold">{startTime}</span>
-                    {isSlotBooked(startTime) ? (
-                      <span className="text-red-500">Booked</span>
-                    ) : (
-                      <span className="text-green-500">Available</span>
-                    )}
-                  </div>
-                  <div>
-                    <span className="text-xs">{end[index]}</span>
-                  </div>
-                  <div>
-                    <span className="text-xs">Price: {prices[index]}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
+  <ul className="mt-4">
+    {times.map((startTime, index) => {
+      const startMoment = moment(startTime, 'HH:mm'); // Convert startTime string to moment object
+      const endMoment = moment(end[index], 'HH:mm'); // Convert endTime string to moment object
+      const adjustedStartTime = adjustTime(startMoment); // Adjusted start time
+      const adjustedEndTime = adjustTime(endMoment); // Adjusted end time
+      const price = prices[index];
+
+      return (
+        <li
+          key={startTime}
+          className={`time-card ${
+            selectedTime === startTime ? 'selected bg-blue-500 text-white' : 'bg-white text-gray-800'
+          }`}
+          onClick={() => !isSlotBooked(startTime) && handleTimeClick(startTime, end[index], price)}
+          disabled={isSlotBooked(startTime)}
+        >
+          <div className="flex justify-between items-center">
+            <span className="font-semibold">{adjustedStartTime}</span> {/* Display adjusted start time */}
+            {isSlotBooked(startTime) ? (
+              <span className="text-red-500">Booked</span>
+            ) : (
+              <span className="text-green-500">Available</span>
+            )}
+          </div>
+          <div>
+            <span className="text-xs">{adjustedEndTime}</span> {/* Display adjusted end time */}
+          </div>
+          <div>
+            <span className="text-xs">Price: {price}</span>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+)}
         </div>
         <div className="mt-4 flex justify-end">
           <Button

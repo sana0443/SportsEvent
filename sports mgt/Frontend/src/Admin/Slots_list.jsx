@@ -6,6 +6,7 @@ import moment from 'moment';
 import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BaseUrl from '../BaseUrl';
+import momentTimezone from 'moment-timezone';
 
 const SlotsList = () => {
   const navigate = useNavigate();
@@ -95,13 +96,13 @@ const SlotsList = () => {
         <div>
           <p className="text-lg font-semibold">
             {slotItem.start_time
-              ? moment(slotItem.start_time).format('YYYY-MM-DD')
+               ? momentTimezone.tz(slotItem.start_time, 'UTC').tz('Your_Timezone_Here').format('YYYY-MM-DD HH:mm')
               : '-'}{' '}
-            - {slotItem.start_time
+            {/* - {slotItem.start_time
               ? moment(slotItem.start_time).format('HH:mm')
-              : '-'}{' '}
+              : '-'}{' '} */}
             - {slotItem.end_time
-              ? moment(slotItem.end_time).format('HH:mm')
+                    ? momentTimezone.tz(slotItem.end_time, 'UTC').tz('Your_Timezone_Here').format('HH:mm')
               : '-'}{' '}
           </p>
           <p className="text-sm text-gray-500">Turf: {slotItem.turf.name}</p>
