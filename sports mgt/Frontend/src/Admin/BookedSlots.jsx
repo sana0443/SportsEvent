@@ -7,16 +7,33 @@ import BaseUrl from '../BaseUrl';
 function BookedSlots() {
   const [bookedSlots, setBookedSlots] = useState([]);
 
+
   useEffect(() => {
-    axios.get(BaseUrl+'/AdminSide/bookedSlots/')
+    axios.get(BaseUrl + '/AdminSide/bookedSlots/')
       .then((response) => {
-        setBookedSlots(response.data);
-        console.log(response.data,'bbbbbbb');
+        const sortedBookedSlots = response.data.sort((a, b) => {
+          // Sort in descending order based on the start_time
+          return new Date(b.slot.start_time) - new Date(a.slot.start_time);
+        });
+        setBookedSlots(sortedBookedSlots);
+        console.log(sortedBookedSlots, 'sorted booked slots');
       })
       .catch((error) => {
         console.error('Failed to fetch booked slots:', error);
       });
   }, []);
+
+
+  const adjustTime = (time) => {
+    const adjustedTime = new Date(time);
+    adjustedTime.setHours(adjustedTime.getHours() - 5);
+    adjustedTime.setMinutes(adjustedTime.getMinutes() - 30);
+    return adjustedTime.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+  };
 
   return (
     <div>
@@ -69,23 +86,23 @@ function BookedSlots() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {bookedSlots.map((booking) => (
-              <tr key={booking.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {booking.id}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {booking.slot ? booking.slot.turf.id : '-'}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                {booking.slot ? moment(booking.slot.start_time).format('YYYY-MM-DD') : '-'}
-                </td>
-                 <td className="px-6 py-4 whitespace-nowrap">
-                {booking.slot ? moment(booking.slot.start_time).format('HH:mm') : '-'}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                {booking.slot ? moment(booking.slot.end_time).format('HH:mm') : '-'}
-                </td>
+        {bookedSlots.map((booking) => (
+          <tr key={booking.id}>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {booking.id}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {booking.slot ? booking.slot.turf : '-'}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {booking.slot ? moment(booking.slot.start_time).format('YYYY-MM-DD') : '-'}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {booking.slot ? adjustTime(booking.slot.start_time) : '-'}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              {booking.slot ? adjustTime(booking.slot.end_time) : '-'}
+            </td>
               
                 <td className="px-6 py-4 whitespace-nowrap">
                   {booking.name}

@@ -54,12 +54,16 @@ function Edit_slot() {
         console.log(slotData,'slotrrrrrr');
         const selectedTurf = availableTurfs.find((turf) => turf.id === slotData.turf);
 
-      // Set the initial "turf" state to the selected turf object
-      setTurf(selectedTurf);
+        // Set the initial "turf" state to the selected turf object
+        setTurf(selectedTurf);
+
+        // Deduct 5 hours and 30 minutes from the slot start_time and end_time
+        const slotStartTime = moment(slotData.start_time).subtract(5, 'hours').subtract(30, 'minutes');
+        const slotEndTime = moment(slotData.end_time).subtract(5, 'hours').subtract(30, 'minutes');
 
         setSelectedDate(moment(slotData.start_time));
-        setStartTime(moment(slotData.start_time));
-        setEndTime(moment(slotData.end_time));
+        setStartTime(slotStartTime);
+        setEndTime(slotEndTime);
         setPrice(slotData.price);
         setIsAvailable(slotData.is_available);
       })
