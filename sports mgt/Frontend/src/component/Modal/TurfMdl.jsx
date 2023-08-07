@@ -67,14 +67,7 @@ function TurfMdl({ onClose, slot, details,turfId ,bookedSlots }) {
       }
     }
 
-    // const currentMoment = moment(current).startOf('day'); // Convert current to a moment object
-
-    // for (let i = 0; i < startDates.length; i++) {
-    //   if (currentMoment.isBetween(startTime[i], endTime[i], null, '[)')) {
-    //     return true; // Disable the date if there is a slot already booked on that day
-    //   }
-    // }
-
+  
     return true; // Disable all dates except the start dates
   };
   const handleTimeClick = (startTime, endTime, price) => {
@@ -119,7 +112,8 @@ return (
           x
         </button>
         <div className="bg-white p-4 rounded-lg overflow-y-auto">
-          <DatePicker disabledDate={disabledDate} value={selectedDate} onChange={handleDateChange} />
+        <DatePicker disabledDate={disabledDate} defaultValue={selectedDate && moment(selectedDate)} onChange={handleDateChange} />
+
           {selectedDate && (
   <ul className="mt-4">
     {times.map((startTime, index) => {

@@ -38,8 +38,8 @@ class signup(AbstractUser):
         email=models.EmailField(unique=True)
         age = models.IntegerField(null=True)
         photo=models.ImageField(null=True,upload_to='Dp/')
-        mobile_regex = RegexValidator(regex=r'^\d+$')
-        phone_number = models.CharField(validators=[mobile_regex], max_length=10,null=True)
+        mobile_regex = RegexValidator(regex=r'^\d{10}$', message="Enter a valid 10-digit mobile number.")
+        phone_number = models.PositiveIntegerField(validators=[mobile_regex],null=True)
         password=models.CharField(max_length=250)
         password2=models.CharField(max_length=250)
         is_blocked = models.BooleanField(default=False)
@@ -64,7 +64,7 @@ class signup(AbstractUser):
    
 
         def __str__(self):
-            return f"Signup #{self.pk}"
+            return f"Signup #{self.email}"
         
         USERNAME_FIELD = 'email'
         REQUIRED_FIELDS = []

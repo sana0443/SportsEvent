@@ -17,6 +17,7 @@ export function Profile() {
   const [playerData, setPlayerData] = useState([]);
   const image = {url:("/src/image/profileImage.jpg")}
   const [bookedSlots, setBookedSlots] = useState([]);
+  const [expandedTeamId, setExpandedTeamId] = useState(null);
  
 
   const navigate = useNavigate();
@@ -146,10 +147,9 @@ export function Profile() {
         <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
       </section>
       <section className="relative bg-blue-gray-50/50 py-16 px-4">
-        <div className="container mx-auto">
-          <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
-            
-            <div className="px-6">
+      <div className="container mx-auto">
+        <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
+          <div className="px-6">
             {/* <div className="mt-16 flex w-full justify-start px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-start  lg:self-center">
                   <Button className="bg-blue-400" onClick={() => openModal(userData)}>Booked Slot</Button>
                 </div> */}
@@ -221,25 +221,34 @@ export function Profile() {
                   </Typography>
                 </div>
               </div>
+             
               <div className="mb-10 border-t border-blue-gray-50 py-6 text-center">
-        <div className="mt-2 flex flex-wrap justify-center">
-          <div className="flex w-full flex-col font-semibold items-center px-4 lg:w-9/12">
-          {teamData && teamData.length > 0 && (
-  <div className="mb-8">
-    <h2 className="text-2xl font-bold mb-4">Team Details</h2>
-    <p className="text-lg font-semibold">Team Name: {teamData[0].team_name}</p>
-    <img
-      src={teamData[0].logo ? `${BaseUrl}${teamData[0].logo}` : 'placeholder_image_url'}
-      alt="Team Logo"
-      className="h-20 w-20 mt-4 mx-auto object-cover rounded-full"
-    />
-  </div>
-)}
+              <div className="flex flex-wrap justify-center">
+        {teamData && teamData.length > 0 && teamData.map((team) => (
+          <div key={team.id} className="flex flex-col font-semibold items-center px-4 lg:w-9/12 ">
+            {/* Team Details */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-4">Team Details</h2>
+              <p className="text-lg font-semibold">Team Name: {team.team_name}</p>
+              <img
+                src={team.logo ? `${BaseUrl}${team.logo}` : 'placeholder_image_url'}
+                alt="Team Logo"
+                className="h-20 w-20 mt-4 mx-auto object-cover rounded-full"
+              />
+            </div>
 
-{playerData.length > 0 && (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Player Details</h2>
-      <div className="grid  md:grid-cols-4 gap-4 justify-center">
+            {/* Player Details (toggle visibility) */}
+            <button
+              className="mb-2 text-bold-400 font-semibold underline"
+              onClick={() => setExpandedTeamId(team.id === expandedTeamId ? null : team.id)}
+            >
+              {expandedTeamId === team.id ? "Hide Players" : "Show Players"}
+            </button>
+
+            {expandedTeamId === team.id && playerData.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Player Details</h2>
+                <div className="grid  md:grid-cols-4 gap-4 justify-center">
         {/* Render players in each line */}
         {playerData.map((player) => (
           <div key={player.id} className="p-4 border rounded-lg shadow-lg">
@@ -251,7 +260,12 @@ export function Profile() {
       </div>
     </div>
   )}
-</div>
+      </div>
+    ))}
+    </div>
+    </div>
+
+          
 <div className="flex justify-center">
 {bookedSlots.length > 0 && (
         <div className="mt-10 border-t border-blue-gray-50 py-6 text-center">
@@ -281,9 +295,11 @@ export function Profile() {
         </div>
       </div>
       </div>
-            </div>
-          </div>
-        </div>
+      </div>
+   
+
+        
+   
       </section>
       <div className="bg-blue-gray-50/50">
         {/* <Footer /> */}

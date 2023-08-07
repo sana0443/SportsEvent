@@ -121,11 +121,16 @@ function ProfileUpdateMdl({ isVisible, onClose, profilee, onProfileUpdate }) {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <Input
-                type="tel"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
+              type="text"
+    placeholder="Phone Number"
+    value={phoneNumber}
+    onChange={(e) => {
+      const inputValue = e.target.value;
+      if (/^\d{0,10}$/.test(inputValue)) {
+        setPhoneNumber(inputValue);
+      }
+    }}
+  />
               <Button type="submit">Update</Button>
             </form>
           </div>
