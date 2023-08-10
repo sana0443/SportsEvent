@@ -87,6 +87,12 @@ function ProfileUpdateMdl({ isVisible, onClose, profilee, onProfileUpdate }) {
 
   if (!isVisible || !profilee) return null;
 
+  if (age < 0) {
+    toast.error("Enter a valid age");
+  } else if (!/^\d+$/.test(age)) {
+    toast.error("Age must be a valid number");
+  }
+
   return (
     <div>
       <div

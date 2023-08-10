@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
 class signup(AbstractUser):
         full_name= models.CharField(max_length=250)
         email=models.EmailField(unique=True)
-        age = models.IntegerField(null=True)
+        age = models.PositiveIntegerField(null=True)
         photo=models.ImageField(null=True,upload_to='Dp/')
         mobile_regex = RegexValidator(regex=r'^\d{10}$', message="Enter a valid 10-digit mobile number.")
         phone_number = models.PositiveIntegerField(validators=[mobile_regex],null=True)

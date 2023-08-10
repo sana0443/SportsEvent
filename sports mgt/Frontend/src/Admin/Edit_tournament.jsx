@@ -181,13 +181,9 @@ const TournamentEditForm = () => {
       return;
     }
   
-    const fieldName = registration_open ? 'registration_deadline' : 'date';
-  
-    setEventData((prevData) => ({
-      ...prevData,
-      [fieldName]: dateString ? moment(dateString, 'YYYY-MM-DD').format('YYYY-MM-DD') : null,
-    }));
+    setDate(dateString ? moment(dateString, 'YYYY-MM-DD').format('YYYY-MM-DD') : null);
   };
+  
   
   
     const handleSubmit = (e) => {
@@ -284,10 +280,11 @@ const TournamentEditForm = () => {
         Date
       </label>
       <DatePicker
-disabledDate={disabledDate}
-onChange={handleDateChange}
-value={date ? moment(date, 'YYYY-MM-DD') : null}
+  disabledDate={disabledDate}
+  onChange={handleDateChange}
+  value={date ? moment(date, 'YYYY-MM-DD') : null}
 />
+
     </div>
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="total_no_of_teams">
